@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding='gb2312'?>
+	<items docType="SDP_SCRIPT_ITEM">
+	<item>
+		<itemKey>0001</itemKey>
+		<itemName>功能节点</itemName>
+		<itemRule>sm_funcregister</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere>funcode like '3810%'</fixedWhere>
+	</item>
+	<item>
+	  	<itemKey>0002</itemKey>
+	  	<itemName>自定义菜单</itemName>
+	  	<itemRule>sm_menuitemreg</itemRule>
+	  	<sysField></sysField>
+	  	<corpField></corpField>
+	  	<grpField></grpField>
+	  	<fixedWhere>menuitemcode like '3810%'</fixedWhere>
+ 	</item>
+	<item>
+		<itemKey>0003</itemKey>
+		<itemName>单据模版</itemName>
+		<itemRule>pub_billtemplet</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField>nodecode</grpField>
+		<fixedWhere> (bill_templetname='SYSTEM' or pk_corp = '@@@@')  and ( modulecode='MAPUB') and  pk_billtypecode like '3810%' </fixedWhere>
+	</item>
+	<item>
+		<itemKey>0004</itemKey>
+		<itemName>查询模版</itemName>
+		<itemRule>pub_query_templet</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField>node_code</grpField>
+		<fixedWhere>pk_corp='@@@@' and node_code like '3810%'</fixedWhere>
+	</item>
+	<item>
+		<itemKey>0005</itemKey>
+		<itemName>打印模版</itemName>
+		<itemRule>pub_print_template</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField>vnodecode</grpField>
+		<fixedWhere>pk_corp='@@@@' and vnodecode like '3810%' and layer='0'</fixedWhere>
+	</item>
+	<item>
+		<itemKey>0007</itemKey>
+		<itemName>默认模版</itemName>
+		<itemRule>pub_systemplate_base</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField>funnode</grpField>
+		<fixedWhere>funnode like '3810%' and moduleid is not null</fixedWhere>
+	</item>
+		  <item>
+		<itemKey>bd_refinfo</itemKey>
+		<itemName>默认参照</itemName>
+		<itemRule>bd_refinfo</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere>MODULENAME = 'mapub'</fixedWhere>
+	</item>
+		<item>
+		<itemKey>bd_uniquerule</itemKey>
+		<itemName>管控模式-唯一性规则</itemName>
+		<itemRule>bd_uniquerule</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere> mdclassid in ('06c07a8f-8c18-4d59-ae6c-958abe743062')
+		</fixedWhere>
+	</item>
+	<item>
+		<itemKey>bd_mode_all</itemKey>
+		<itemName>管控模式</itemName>
+		<itemRule>bd_mode_all</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere>mdclassid in ('06c07a8f-8c18-4d59-ae6c-958abe743062')
+		</fixedWhere>
+	</item>
+	<item>
+		<itemKey>bd_mode_selected</itemKey>
+		<itemName>管控模式</itemName>
+		<itemRule>bd_mode_selected</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere>mdclassid in ('06c07a8f-8c18-4d59-ae6c-958abe743062')
+		</fixedWhere>
+	</item>
+	<item>
+		<itemKey>pub_query_sysfunc</itemKey>
+		<itemName>查询模版系统函数</itemName>
+		<itemRule>pub_query_sysfunc</itemRule>
+		<sysField></sysField>
+		<corpField></corpField>
+		<grpField></grpField>
+		<fixedWhere>classname like 'nc.vo.mapub.query2.template.sysfunc.%'
+		</fixedWhere>
+	</item>
+</items>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="true">
+	 
+    <!--*********************自定义参照面板开始********************************************-->
+	<!--物料价格来源参照面板-->
+	<bean id="priceSourcesBodyRefPanel" class="nc.ui.mapub.materialpricebase.dialog.priceSources.view.body.PriceSourcesBodyRefPanel">
+	    <property name="dialog" ref="priceSourcesbodyDialog" />
+	    <property name="dataManager" ref="dialogbodyModelDataManager" />    
+	    <property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源对话框-->
+
+	<!-- 构造对话框 -->
+	<bean id="priceSourcesbodyDialog" class="nc.ui.mapub.materialpricebase.dialog.priceSources.view.body.PriceSourcesFuncletDialog" init-method="initUI">
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+		<property name="model" ref="dialogbodyBillModel"></property>
+        <property name="dialogContainer" ref="priceSourcesbodyDialogContainer" />
+        <property name="showBottomPanel" value="true"></property>
+        <property name="bottomActions">
+			<list>
+                <ref bean="priceSourcesbodyConfirmAction" />
+                <ref bean="priceSourcesbodyCancelAction" /> 
+			</list>
+		</property>
+	</bean>
+	<!-- 价格来源对话框的BillForm-->
+	<bean id="dialogbodyBillForm" class="nc.ui.mapub.materialpricebase.dialog.priceSources.view.PriceSourcesBillForm"
+		init-method="initUI">
+		<property name="nodekey" value="3810011001" />
+		<property name="model" ref="dialogbodyBillModel" />
+		<property name="templateContainer" ref="templateContainer" />
+		<property name="autoAddLine" value="true" />
+		<property name="showTotalLine" value="false" />	
+	</bean>
+	<!-- 价格来源对话框的数据模型管理器，主要负责各种方式的模型初始化 -->
+	<bean id="dialogbodyModelDataManager" class="nc.ui.mapub.materialpricebase.dialog.priceSources.view.body.PriceSourcesModelDataManager">
+		<property name="model" ref="dialogbodyBillModel"></property>
+		<property name="service" ref="queryBillForm"></property>
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!-- 价格来源对话框的管理应用模型 -->
+	<bean id="dialogbodyBillModel" class="nc.ui.pubapp.uif2app.model.BillManageModel">
+		<property name="context" ref="context"></property>
+		<property name="businessObjectAdapterFactory" ref="dialogbodyBoadatorfactory" />
+	</bean>
+	<!-- 应用服务类，负责进行模型操作的处理 -->
+	<bean id="dialogbodyBoadatorfactory" class="nc.vo.bd.meta.BDObjectAdpaterFactory" />
+	
+	<!-- 界面容器 -->
+	<bean id="priceSourcesbodyDialogContainer" class="nc.ui.uif2.TangramContainer"
+		init-method="initUI">
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+				<property name="component" ref="dialogbodyBillForm" />
+			</bean>
+		</property>
+		<property name="editActions">
+			<list>			
+                <ref bean="priceSourcesbodyAddAction" />
+				<ref bean="priceSourcesbodyDelAction" />
+				<ref bean="priceSourcesbodyInslineAction" />
+				<ref bean="separatorAction" />			
+			    <ref bean="priceSourcesbodyUpLineAction" />
+			    <ref bean="priceSourcesbodyDownLineAction" />
+			    <ref bean="priceSourcesbodyTopLineAction" />
+			    <ref bean="priceSourcesbodyBottomLineAction" />	    	
+			</list>
+		</property>
+		<property name="model">
+			<ref bean="dialogbodyBillModel" />
+		</property>
+	</bean>
+	<!--价格来源上移按钮-->
+	<bean id="priceSourcesbodyUpLineAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesUpLineAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源下移按钮-->
+	<bean id="priceSourcesbodyDownLineAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesDownLineAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源置顶按钮-->
+	<bean id="priceSourcesbodyTopLineAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesTopLineAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源置底按钮-->
+	<bean id="priceSourcesbodyBottomLineAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesBottomLineAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	
+	
+	<!--价格来源新增按钮-->
+	<bean id="priceSourcesbodyAddAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesAddAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源删除按钮-->
+	<bean id="priceSourcesbodyDelAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesDelAction">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源插入行按钮-->
+	<bean id="priceSourcesbodyInslineAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesInsline">
+        <property name="model" ref="dialogbodyBillModel" />
+		<property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	
+	
+    <!--价格来源确定按钮-->
+    <bean id="priceSourcesbodyConfirmAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.body.PriceSourcesConfirmAction">
+        <property name="dialog" ref="priceSourcesbodyDialog" />
+        <property name="billform" ref="billFormEditor" />
+        <property name="dialogBillForm" ref="dialogbodyBillForm" />
+        <property name="service" ref="bodyconfirmService" />
+	</bean>
+	<!--价格来源确定按钮的校验-->
+	<bean id="bodyconfirmService" class="nc.ui.mapub.materialpricebase.dialog.priceSources.util.PriceSourcesConfirmService">
+        <property name="dialogBillForm" ref="dialogbodyBillForm" />
+	</bean>
+	<!--价格来源取消按钮-->
+    <bean id="priceSourcesbodyCancelAction" class="nc.ui.mapub.materialpricebase.dialog.priceSources.action.PriceSourcesCancelAction">
+        <property name="dialog" ref="priceSourcesbodyDialog" />
+	</bean>
+
+	  <!-- 事件监听 -->
+		<bean id="dialogbodychildrenPicky" class="nc.ui.pubapp.uif2app.event.ChildrenPicky">
+			<property name="billform" ref="dialogbodyBillForm" />
+			<property name="bodyVoClasses">
+				<list>					
+					<value>nc.vo.mapub.materialpricebase.entity.MaterialPriceSourcesBodyVO</value>					
+				</list>
+			</property>
+		</bean>
+		<bean id="dialogbodyeventMediator" class="nc.ui.pubapp.uif2app.model.AppEventHandlerMediator">
+		<property name="model" ref="dialogbodyBillModel" />
+		<property name="handlerGroup">
+			<list>
+				<!-- 表体字段编辑前事件 -->
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+					<property name="event"
+						value="nc.ui.pubapp.uif2app.event.card.CardBodyBeforeEditEvent" />
+					<property name="picky" ref="dialogbodychildrenPicky" />
+					<property name="handler">
+						<bean
+							class="nc.ui.mapub.materialpricebase.dialog.priceSources.handler.CardBodyBeforeEditHandler"
+							init-method="initMap" />
+					</property>
+				</bean>
+
+				<!-- 表体字段编辑后事件 -->
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+					<property name="event"
+						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
+					<property name="picky" ref="dialogchildrenPicky" />
+					<property name="handler">
+						<bean class="nc.ui.mapub.materialpricebase.dialog.priceSources.handler.CardBodyAfterEditHandler" init-method="initMap" />
+					</property>
+				</bean>				
+			</list>
+		</property>
+	</bean>
+
+	<!--查询界面来源-->
+	<bean id="queryBillForm" class="nc.ui.mapub.materialpricebase.util.PricSourcesQueryService">
+	    <property name="billform" ref="billFormEditor" />
+	</bean>
+	
+	<!--*********************自定义参照面板结束********************************************-->
+    
+</beans>

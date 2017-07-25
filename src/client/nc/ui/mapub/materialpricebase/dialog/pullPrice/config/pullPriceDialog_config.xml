@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="true">
+	<!-- 错误信息对话框配置文件 -->
+	<import 
+    resource="classpath:/nc/ui/mapub/materialpricebase/dialog/errorInfo/config/errorInfo_config.xml" />
+
+    <!--*********************自定义参照面板开始********************************************-->
+	<!-- 构造对话框 -->
+	<bean id="pullPriceDialog" class="nc.ui.mapub.materialpricebase.dialog.pullPrice.view.PullPriceDialog" init-method="initUI">
+<!--		<constructor-arg ref="context" />-->
+	    <property name="dialogBillForm" ref="pullPriceDialogBillForm" />
+		<property name="model" ref="pullPriceDialogBillModel"></property>
+		<property name="tangramContainer" ref="pullPriceDialogContainer" />
+		<property name="dlgWidth" value="520"></property>
+		<property name="dlgHeight" value="340"></property>
+		<property name="resizable" value="true"></property>
+	</bean>
+	<!-- 取价对话框的BillForm-->
+	<bean id="pullPriceDialogBillForm" class="nc.ui.pubapp.uif2app.view.BillForm"
+		init-method="initUI">
+		<property name="nodekey" value="3810011002" />
+		<property name="model" ref="pullPriceDialogBillModel" />
+		<property name="templateContainer" ref="templateContainer" />
+		<property name="autoAddLine" value="true" />
+		<property name="showTotalLine" value="false" />	
+	</bean>
+	<!-- 取价对话框的数据模型管理器，主要负责各种方式的模型初始化 -->
+	<bean id="pullPriceDialogModelDataManager" class="nc.ui.pubapp.uif2app.query2.model.ModelDataManager">
+		<property name="model" ref="pullPriceDialogBillModel"></property>
+	</bean>
+	<!-- 取价对话框的管理应用模型 -->
+	<bean id="pullPriceDialogBillModel" class="nc.ui.pubapp.uif2app.model.BillManageModel">
+		<property name="context" ref="context"></property>
+		<property name="businessObjectAdapterFactory" ref="pullPriceBoadatorfactory" />
+	</bean>
+	<!-- 应用服务类，负责进行模型操作的处理 -->
+	<bean id="pullPriceBoadatorfactory" class="nc.vo.bd.meta.BDObjectAdpaterFactory" />
+	
+	<!-- 界面容器 -->
+	<bean id="pullPriceDialogContainer" class="nc.ui.uif2.TangramContainer"
+		init-method="initUI">
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+				<property name="component" ref="pullPriceDialogBillForm" />
+			</bean>
+		</property>
+
+		<property name="actions">
+			<list>			
+                <ref bean="pullPriceConfirmAction" />
+				<ref bean="pullPriceCancelAction" />
+			</list>
+		</property>
+
+		<property name="model">
+			<ref bean="pullPriceDialogBillModel" />
+		</property>
+	</bean>
+	
+	
+    <!--取价确定按钮-->
+    <bean id="pullPriceConfirmAction" class="nc.ui.mapub.materialpricebase.dialog.pullPrice.action.PullPriceConfirmAction">
+        <property name="erroInfoDialog" ref="erroInfoDialog" />  
+<!--        <property name="erroInfolist" ref="erroInfolist" /> -->
+        <property name="dialog" ref="pullPriceDialog" />
+        <property name="dialogBillForm" ref="pullPriceDialogBillForm" />
+        <property name="model" ref="manageAppModel" />
+        <property name="service" ref="pullPriceConfirmService" />      
+	</bean>
+
+	 <!-- 确定按钮服务 -->
+    <bean id="pullPriceConfirmService" class="nc.ui.mapub.materialpricebase.dialog.pullPrice.util.PullPriceConfirmService">
+        <property name="dialogBillForm" ref="pullPriceDialogBillForm" />
+        <property name="model" ref="manageAppModel" />
+    </bean>	
+	
+	<!--取价取消按钮-->
+    <bean id="pullPriceCancelAction" class="nc.ui.mapub.materialpricebase.dialog.pullPrice.action.PullPriceCancelAction">
+        <property name="dialog" ref="pullPriceDialog" />
+	</bean>
+
+    <!-- 事件监听 -->
+	<bean id="pulldialogeventMediator" class="nc.ui.pubapp.uif2app.model.AppEventHandlerMediator">
+	  <property name="model" ref="pullPriceDialogBillModel" />
+	  <property name="handlerGroup">
+			<list>
+				<!-- 表头表尾字段编辑前事件 -->
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailBeforeEditEvent" />
+					<property name="handler">
+						<bean class="nc.ui.mapub.materialpricebase.dialog.pullPrice.handler.CardHeadTailBeforeEditHandler" init-method="initMap"/>
+					</property>
+				</bean>
+
+				<!-- 表头表尾字段编辑后事件-->
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailAfterEditEvent" />
+					<property name="handler">
+						<bean class="nc.ui.mapub.materialpricebase.dialog.pullPrice.handler.CardHeadTailAfterEditHandler" init-method="initMap"/>
+					</property>
+				</bean>	
+			</list>
+		</property>
+	</bean>
+	
+	<!--*********************自定义参照面板结束********************************************-->
+    
+</beans>

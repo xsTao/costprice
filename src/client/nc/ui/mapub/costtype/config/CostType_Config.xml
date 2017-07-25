@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="true">
+	<!-- 环境变量 -->
+	<bean id="context" class="nc.vo.uif2.LoginContext" />
+	
+	<!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
+	<!-- 对于有元数据的VO，可以使用下面的配置 -->
+	<bean id="boadatorfactory" class="nc.vo.bd.meta.BDObjectAdpaterFactory" />
+	
+	<!-- 数据模型管理器，主要负责各种方式的模型初始化 -->
+	<bean id="modelDataManager" class="nc.ui.mapub.costtype.model.CostTypeModelDataManager">
+		<property name="model" ref="batchBillTableModel"></property>
+		<property name="service" ref="batchModelService"></property>
+	</bean>
+	<!-- 模板容器，负责对模板的统一装载 --> 
+	<bean id="templateContainer" class="nc.ui.pubapp.uif2app.view.TemplateContainer">
+		<property name="context" ref="context" />
+	</bean>
+	
+	<!-- 应用服务类，负责进行模型操作的处理 -->
+	<bean id="batchModelService"
+		class="nc.ui.mapub.costtype.model.CostTypeSmartBatchAppModelService">
+		<property name="voClass" value="nc.vo.mapub.costtype.entity.CostTypeVO" />
+		<property name="costServiceItf" value="nc.itf.mapub.costtype.ICostTypeService" />
+	</bean>
+	<!-- 批量操作前台校验 -->
+	<bean id="batchValidateSerice" class="nc.ui.mapub.costtype.validator.CostTypeValidatService">
+		<property name="editor" ref="list" />
+	</bean>
+
+	<!-- 批量操作应用模型 -->
+	<bean id="batchBillTableModel" class="nc.ui.mapub.costtype.model.CostTypeBatchModel">
+		<property name="context" ref="context"></property>
+		<property name="service" ref="batchModelService"></property>
+		<property name="businessObjectAdapterFactory" ref="boadatorfactory"></property>
+		<property name="validationService" ref="batchValidateSerice"></property>
+		<property name="modelDataManager" ref="modelDataManager" />
+	</bean>
+	
+	<bean id="orgPanel" class="nc.ui.bd.pub.BDOrgPanel" init-method="initUI">
+		<property name="model">
+			<ref bean="batchBillTableModel" />
+		</property>
+		<property name="dataManager">
+			<ref bean="modelDataManager" />
+		</property>
+<!--
+		<property name="refNodeName" value="业务单元"></property>
+		<property name="labelName" value="业务单元"></property>-->
+
+<!--		<property name="labelName">-->
+<!--			<bean class="nc.ui.uif2.I18nFB">-->
+<!--				<property name="resDir" value="10140bank"></property>-->
+<!--				<property name="defaultValue" value="业务单元"></property>-->
+<!--				<property name="resId" value="010140bank0040"></property>-->
+<!--			</bean>-->
+<!--		</property>-->
+	</bean>
+
+
+
+	<!-- 界面元素 ########################################################### -->
+
+	<!-- 列表控件的取值策略 -->
+	<bean id="componentValueManager" class="nc.ui.uif2.editor.value.BillCardPanelBodyVOValueAdapter">
+		<property name="bodyVOName" value="nc.vo.mapub.costtype.entity.CostTypeVO" />
+	</bean>
+	
+	<!-- 列表控件 -->
+	<bean id="list" class="nc.ui.mapub.costtype.view.CostTypeBatchBillTable"
+		init-method="initUI">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="templateContainer" ref="templateContainer" />
+		<property name="componentValueManager" ref="componentValueManager" />
+		<property name="voClassName" value="nc.vo.mapub.costtype.entity.CostTypeVO" />
+		<property name="isBodyAutoAddLine" value="true" />
+		<property name="bodyMultiSelectEnable" value="true" />
+		<property name="addLineAction" ref="addAction"></property>
+		<property name="delLineAction" ref="delAction" />
+	</bean>
+
+	<!-- 界面布局总装########################################################### -->
+	<bean id="container" class="nc.ui.uif2.TangramContainer" init-method="initUI">
+		<property name="model">
+			<ref bean="batchBillTableModel" />
+		</property>
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+				<property name="down">
+					<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+						<property name="component" ref="list"></property>
+					</bean>
+				</property>
+				<property name="up">
+					<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+						<property name="component" ref="orgPanel"></property>
+					</bean>
+				</property>
+				<property name="dividerLocation" value="31"></property>
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="addAction" />
+				<ref bean="editAction" />
+				<ref bean="delAction" />
+				<bean class="nc.funcnode.ui.action.SeparatorAction" />
+				<ref bean="filterActionMenu" />
+				<ref bean="refreshAction" />
+				<bean class="nc.funcnode.ui.action.SeparatorAction" />
+				<!-- <ref bean="RelateFunGroup" /> -->
+				<!-- <ref bean="printActionMenu" /> -->
+			</list>
+		</property>
+		<property name="editActions">
+			<list>
+				<ref bean="addAction" />
+				<ref bean="delAction" />
+				<bean class="nc.funcnode.ui.action.SeparatorAction" />
+				<!--按照需求，新增按钮在编辑状态下不可见（用），但是是否合理仍然需要研究，在此暂时以需求为准，纪录修改，2010.04.14 -->
+				<ref bean="saveAction" />
+				<bean class="nc.funcnode.ui.action.SeparatorAction" />
+				<ref bean="cancelAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="addAction" class="nc.ui.mapub.costtype.action.CostTypeAddLineAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="editor" ref="list" />
+		<property name="voClassName" value="nc.vo.mapub.costtype.entity.CostTypeVO" />
+		<property name="context" ref="context" />
+	</bean>
+	
+	<bean id="editAction" class="nc.ui.mapub.costtype.action.CostTypeEditAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="editor" ref="list" />
+		<property name="context" ref="context" />
+	</bean>
+	
+	<bean id="delAction" class="nc.ui.mapub.costtype.action.CostTypeDelAction">
+		<property name="model" ref="batchBillTableModel" />
+	</bean>
+
+	<bean id="saveAction" class="nc.ui.mapub.costtype.action.CostTypeSaveAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="editor" ref="list" />
+		<property name="validationService" ref="batchValidateSerice"></property>
+	</bean>
+	
+	<bean id="cancelAction" class="nc.ui.pubapp.uif2app.actions.batch.BatchCancelAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="editor" ref="list" />
+	</bean>
+	
+	<bean id="refreshAction" class="nc.ui.pubapp.uif2app.actions.batch.BatchRefreshAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="modelManager" ref="modelDataManager" />
+	</bean>
+
+	<bean id="printPreAction" class="nc.ui.pubapp.uif2app.actions.MetaDataBasedPrintAction">
+		<property name="preview" value="true" />
+		<property name="model">
+			<ref bean="batchBillTableModel" />
+		</property>
+		<property name="DataSource" ref="datasource" />
+	</bean>
+	
+	<bean id="printAction" class="nc.ui.pubapp.uif2app.actions.MetaDataBasedPrintAction">
+		<property name="preview" value="false" />
+		<property name="model">
+			<ref bean="batchBillTableModel" />
+		</property>
+		<property name="DataSource" ref="datasource" />
+	</bean>
+	
+	<!-- 输出 -->
+	<bean id="outputAction" class="nc.ui.pubapp.uif2app.actions.OutputAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="DataSource" ref="datasource" />
+	</bean>
+
+	<!-- 列表数据源 -->
+	<bean id="datasource" class="nc.ui.bd.pub.actions.print.MetaDataAllDatasSource">
+		<property name="model" ref="batchBillTableModel" />
+	</bean>
+
+	<!-- 打印 下拉 -->
+	<bean id="printActionMenu" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code" value="printMenuAction" />
+		<property name="name" value="打印" />
+		<property name="tooltip" value="打印（Alt+P）" />
+		<property name="actions">
+			<list>
+				<ref bean="printAction" />
+				<ref bean="printPreAction" />
+				<ref bean="outputAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean name="filterActionMenu" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>filter</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="3810006_0" />
+				<property name="resId" value="0101436401-0348" />
+				<property name="defaultValue" value="过滤" />
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="showSealAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="showSealAction" class="nc.ui.mapub.costtype.action.CostTypeShowLegalDataAction">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="dataManager" ref="modelDataManager" />
+		<property name="code" value="ShowSeal" />
+	</bean>
+
+	<bean id="ClosingListener" class="nc.ui.uif2.FunNodeClosingHandler">
+		<property name="model">
+			<ref bean="batchBillTableModel" />
+		</property>
+		<property name="saveaction">
+			<ref bean="saveAction" />
+		</property>
+		<property name="cancelaction">
+			<ref bean="cancelAction" />
+		</property>
+	</bean>
+
+	<!-- 编辑事件监听 -->
+	<bean id="appEventHandlerMediator" class="nc.ui.pubapp.uif2app.model.AppEventHandlerMediator">
+		<property name="model" ref="batchBillTableModel" />
+		<property name="handlerMap">
+			<map>
+				<entry key="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent">
+					<list>
+						<ref bean="changeAfterEditHandler" />
+					</list>
+				</entry>
+				<entry key="nc.ui.pubapp.uif2app.event.card.CardBodyBeforeEditEvent">
+					<list>
+						<ref bean="changeBeforeEditHandler" />
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="changeAfterEditHandler" class="nc.ui.mapub.costtype.eventhandler.CostTypeListBodyAfterEventHandler">
+	</bean>
+	
+	<bean id="changeBeforeEditHandler" class="nc.ui.mapub.costtype.eventhandler.CostTypeBodyBeforeEditEventHandler">
+	</bean>
+
+	<!-- 合并打开节点连接数 如果没有相应的id，需要自己再定义remoteCallCombinatorCaller或对应id，否则合并不起作用 -->
+	<bean id="remoteCallCombinatorCaller" class="nc.ui.uif2.editor.UIF2RemoteCallCombinatorCaller">
+		<property name="remoteCallers">
+			<list>
+				<!-- 单据模板 -->
+				<ref bean="templateContainer" />
+			</list>
+		</property>
+	</bean>
+</beans>

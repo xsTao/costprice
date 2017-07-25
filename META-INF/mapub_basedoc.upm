@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="gb2312"?>
+<module name="MAPUB_EJB">
+	<public>
+		<!--物料价格库-业务单元add by zhangchd-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.materialpricebase.IMaterialPriceBaseMaintainService</interface>
+			<implementation>nc.impl.mapub.materialpricebase.MaterialPriceBaseMaintainServiceImpl</implementation>
+		</component>
+		<!--物料价格库-业务单元add by zhangchd-->	
+		
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.acquirepricelog.pub.IAcquirePricelogPubService</interface>
+			<implementation>nc.pubimpl.mapub.acquirepricelog.pub.AcquirePricelogPubServiceImpl</implementation>
+		</component>
+		
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.allocfac.IAllocfacMaintainService</interface>
+			<implementation>nc.impl.mapub.allocfac.AllocfacMaintainServiceImpl</implementation>
+		</component>
+		
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.driver.IDriverMaintainService</interface>
+			<implementation>nc.impl.mapub.driver.DriverMaintainServiceImpl</implementation>
+		</component>
+		
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.driver.cm.allocate.ICalFormulaDriverNumber</interface>
+			<implementation>nc.pubimpl.mapub.driver.cm.allocate.CalFormulaDriverNumberImpl</implementation>
+		</component>
+		<!--成本类型 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.costtype.ICostTypeService</interface>
+			<implementation>nc.impl.mapub.costtype.CostTypeServiceImpl</implementation>
+		</component>	
+		<!--成本类型 end-->
+		<!--联产品相对系数 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.coprodcoef.ICoprodcoefMaintain</interface>
+			<implementation>nc.impl.mapub.coprodcoef.CoprodcoefMaintainImpl</implementation>
+		</component>
+		<!--联产品相对系数 end-->
+		<!--取价错误日志 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.acquirepricelog.IAcquirepricelogMaintainService</interface>
+			<implementation>nc.impl.mapub.acquirepricelog.AcquirepricelogMaintainServiceImpl</implementation>
+		</component>
+		<!--取价错误日志 end-->
+	</public>
+</module>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="gb2312"?>
+<module name="MAPUB_EJB">
+	
+	<public>	
+		<!--物料价格库-业务单元add by zhangchd-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.materialpricebase.IMaterialPriceBaseQueryService</interface>	
+			<implementation>nc.impl.mapub.materialpricebase.MaterialPriceBaseQueryServiceImpl</implementation>
+		</component>
+		<!--物料价格库-业务单元add by zhangchd-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.materialpricebase.pub.IMaterialPriceBasePubQueryServiceForPrice</interface>	
+			<implementation>nc.pubimpl.mapub.materialpricebase.pub.MaterialPriceBasePubQueryServiceForPriceImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.materialpricebase.sca.allocate.IMaterialPriceBasePubQueryServiceForAllocate</interface>	
+			<implementation>nc.pubimpl.mapub.materialpricebase.sca.allocate.MaterialPriceBasePubQueryServiceForAllocateImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.materialpricebase.sca.driver.IMaterialPriceBasePubQueryServiceForDriver</interface>	
+			<implementation>nc.pubimpl.mapub.materialpricebase.sca.driver.MaterialPriceBasePubQueryServiceForDriverImpl</implementation>
+		</component>
+		
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.ITempService</interface>	
+			<implementation>nc.pubimpl.mapub.TempServiceImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.allocfac.IAllocfacQueryService</interface>
+			<implementation>nc.impl.mapub.allocfac.AllocfacQueryServiceImpl</implementation>
+		</component>
+        <component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.allocfac.cm.allocate.IAllocfacQueryForAllocateService</interface>
+			<implementation>nc.pubimpl.mapub.allocfac.cm.allocate.AllocfacQueryServiceForAllocateImpl</implementation>
+		</component>
+		<!-- 成本动因 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.driver.IDriverQueryService</interface>
+			<implementation>nc.impl.mapub.driver.DriverQueryServiceImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.driver.cm.allocate.IDriverQueryForAllocate</interface>
+			<implementation>nc.pubimpl.mapub.driver.cm.allocate.DriverQueryForAllocateImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.driver.cm.pub.IDriverQueryForPub</interface>
+			<implementation>nc.pubimpl.mapub.driver.cm.pub.DriverQueryForPubImpl</implementation>
+		</component>
+		<!-- 成本动因 end-->
+		<!--成本类型 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.mapub.costtype.pub.ICostTypePubQueryService</interface>
+			<implementation>nc.pubimpl.mapub.costtype.cm.pub.CostTypePubQueryServiceImpl</implementation>
+		</component>
+		<!--成本类型 end-->
+		<!--联产品相对系数 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.coprodcoef.ICoprodcoefQuery</interface>
+			<implementation>nc.impl.mapub.coprodcoef.CoprodcoefQueryImpl</implementation>
+		</component>
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.pubitf.coprodcoef.pub.ICoprodcoefPubQuery</interface>
+			<implementation>nc.pubimpl.mapub.coprodcoef.pub.CoprodcoefPubQueryImpl</implementation>
+		</component>
+		<!--联产品相对系数 end-->
+		<!--取价错误日志 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.acquirepricelog.IAcquirepricelogQueryService</interface>
+			<implementation>nc.impl.mapub.acquirepricelog.AcquirepricelogQueryServiceImpl</implementation>
+		</component>
+		<!--取价错误日志 end-->
+	</public>		
+</module>

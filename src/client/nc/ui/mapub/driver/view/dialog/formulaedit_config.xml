@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 界面显示 -->
+	<bean id="formulaContainer" class="nc.ui.uif2.TangramContainer"
+		init-method="initUI">
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+				<property name="up">
+					<bean class="nc.ui.uif2.tangramlayout.node.HSNode">
+						<property name="left">
+							<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+								<property name="up">
+									<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+										<property name="up">
+											<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+												<property name="component">
+													<ref bean="formulaRealEditorPanel" />
+												</property>
+											</bean>
+										</property>
+										<property name="down">
+											<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+												<property name="component">
+													<ref bean="formulavalueRealEditorPanel" />
+												</property>
+											</bean>
+										</property>
+									</bean>
+								</property>
+								<property name="down">
+									<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+										<property name="component">
+											<ref bean="formulaButtonPanel" />
+										</property>
+									</bean>
+								</property>
+								<property name="dividerLocation">
+									<value>0.8f</value>
+								</property>
+							</bean>
+						</property>
+						<property name="right">
+							<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+								<property name="up">
+									<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+										<property name="component">
+											<ref bean="formulaDigitPanel" />
+										</property>
+									</bean>
+								</property>
+								<property name="down">
+									<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+										<property name="component">
+											<ref bean="formulaOperatorPanel" />
+										</property>
+									</bean>
+								</property>
+								<property name="dividerLocation">
+									<value>0.5f</value>
+								</property>
+							</bean>
+						</property>
+						<property name="dividerLocation">
+							<value>0.65f</value>
+						</property>
+					</bean>
+				</property>
+
+				<property name="down">
+					<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+						<property name="up">
+							<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+								<property name="component">
+									<ref bean="formulaVariablePanel" />
+								</property>
+							</bean>
+						</property>
+						<property name="down">
+							<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+								<property name="component">
+									<ref bean="formulaHintMsgPanel" />
+								</property>
+							</bean>
+						</property>
+						<property name="dividerLocation">
+							<value>0.9f</value>
+						</property>
+					</bean>
+				</property>
+				<property name="dividerLocation">
+					<value>0.4f</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 公式中实际进行编辑的编辑器界面 -->
+	<bean id="formulaRealEditorPanel"
+		class="nc.ui.mapub.driver.view.dialog.DriverFormulaRealEditorPanel"
+		init-method="initUI">
+		<property name="formulaParse">
+			<ref bean="formulaParse" />
+		</property>
+		<property name="convertorList">
+			<list>
+				<!-- ref bean="ifelseConvertor"/> -->
+			</list>
+		</property>
+		<property name="formulaWordSorter">
+			<ref bean="formulaWordSorter" />
+		</property>
+		<property name="formulaTokenMarker">
+			<ref bean="formulaTokenMarker" />
+		</property>
+		<property name="formulaCodeEditorPanel">
+			<ref bean="formulavalueRealEditorPanel"></ref>
+		</property>
+	</bean>
+	<bean id="formulavalueRealEditorPanel"
+		 class="nc.ui.mapub.driver.view.dialog.DriverFormulaCodeRealEditorPanel"
+		init-method="initUI">
+		<property name="formulaParse">
+			<ref bean="formulaParse" />
+		</property>
+		<property name="convertorList">
+			<list>
+				<!-- ref bean="ifelseConvertor"/> -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 公式编辑器中的按钮注册界面 -->
+	<bean id="formulaButtonPanel" class="nc.ui.pub.formula.dialog.FormulaButtonPanel"
+		init-method="initUI">
+		<property name="actions">
+			<list>
+				<ref bean="formulaClearAction" />
+				<ref bean="formulaDeleteAction" />
+				<ref bean="formulaValidateAction" />
+				<ref bean="formulaOKAction" />
+				<ref bean="formulaCancelAction" />
+			</list>
+		</property>
+		<property name="actionsWithDialog">
+			<list>
+				<ref bean="formulaClearAction" />
+				<ref bean="formulaOKAction" />
+				<ref bean="formulaCancelAction" />
+			</list>
+		</property>
+	</bean>
+	<!-- 公式编辑器中的数字按键界面 -->
+	<bean id="formulaDigitPanel" class="nc.ui.pub.formula.dialog.FormulaDigitPanel">
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+	<!-- 公式编辑器中一些基本操作的按钮，例如+,-,*,/等 -->
+	<bean id="formulaOperatorPanel" class="nc.ui.mapub.driver.view.dialog.DriverFormulaOperatorPanel">
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+	<!-- 公式编辑器中用于显示函数信息的界面 -->
+	<bean id="formulaFunctionPanel" class="nc.ui.pub.formula.dialog.FormulaFunctionPanel"
+		init-method="initUI">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+		<property name="customerTabBuilders">
+			<list>
+				<ref bean="commonFunTabBuilder" />
+			</list>
+		</property>
+		<property name="formulaTypeManager">
+			<ref bean="formulaTypeManager" />
+		</property>
+	</bean>
+	<!-- 公式编辑器中用于显示变量信息的界面 -->
+	<bean id="formulaVariablePanel" class="nc.ui.pub.formula.dialog.FormulaVariablePanel"
+		init-method="initUI">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+		<property name="customerTabBuilders">
+			<list>
+				<ref bean="OutputTabBuilder" />
+				<ref bean="BomTabBuilder" />
+				<ref bean="PriceTabBuilder" />
+				<ref bean="ActivityTabBuilder" />
+				<ref bean="AllocfacTabBuilder" />
+				<ref bean="FactorTabBuilder" />
+				<ref bean="OtherTabBuilder" />
+
+
+
+			</list>
+		</property>
+	</bean>
+	<!-- 公式编辑器中用于显示提示信息的界面 -->
+	<bean id="formulaHintMsgPanel" class="nc.ui.pub.formula.dialog.FormulaHintMsgPanel"></bean>
+
+	<bean id="formulaParse" class="nc.ui.pub.formulaparse.FormulaParse" />
+
+	<bean id="commonFunTabBuilder" class="nc.ui.pub.formula.dialog.CommonFunTabBuilder">
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="formulaOKAction" class="nc.ui.mapub.driver.view.dialog.DriverFormulaOKAction">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="formulaValueEditorPanel">
+			<ref bean="formulavalueRealEditorPanel"></ref>
+		</property>
+	</bean>
+
+	<bean id="formulaCancelAction" class="nc.ui.pub.formula.dialog.FormulaCancelAction">
+	</bean>
+
+	<bean id="formulaClearAction" class="nc.ui.mapub.driver.view.dialog.DriverFormulaClearAction">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="formulaValueEditorPanel">
+			<ref bean="formulavalueRealEditorPanel"></ref>
+		</property>
+	</bean>
+	<bean id="formulaDeleteAction" class="nc.ui.mapub.driver.view.dialog.DriverFormulaDeleteAction">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="formulaValueEditorPanel">
+			<ref bean="formulavalueRealEditorPanel"></ref>
+		</property>
+	</bean>
+
+	<!-- action中添加了业务检查 -->
+	<bean id="formulaValidateAction"
+		 class="nc.ui.mapub.driver.view.dialog.DriverFormulaValidateAction">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+	</bean>
+
+	<!-- 产出量界面 -->
+	<bean id="OutputTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.OutputTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+
+
+	</bean>
+	<!-- 消耗类 -->
+	<bean id="BomTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.BomTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 产品价值 -->
+	<bean id="PriceTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.PriceTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 作业 -->
+	<bean id="ActivityTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.ActivityTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+
+
+
+	</bean>
+
+	<!-- 分配系数 -->
+	<bean id="AllocfacTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.AllocfacTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+
+
+
+
+	</bean>
+
+
+	<!-- 核算要素 -->
+	<bean id="FactorTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.FactorTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+
+
+
+
+	</bean>
+	<!-- 其他 -->
+	<bean id="OtherTabBuilder"
+		 class="nc.ui.mapub.driver.view.dialog.formulaVariableTab.OtherTabBuilder">
+		<property name="formulaRealEditorPanel">
+			<ref bean="formulaRealEditorPanel" />
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="formulaRealEditorPanel" />
+				<ref bean="formulavalueRealEditorPanel" />
+				<ref bean="formulaHintMsgPanel" />
+			</list>
+		</property>
+	</bean>
+	<!-- 公式函数类型管理器 -->
+	<bean id="formulaTypeManager" class="nc.ui.pub.formula.manager.FormulaTypeManager"
+		init-method="init">
+		<property name="formulaParse">
+			<ref bean="formulaParse" />
+		</property>
+		<property name="basicTypeConfigList">
+			<list>
+				<ref bean="basicStringType" />
+			</list>
+		</property>
+		<property name="customerTypeList">
+			<list>
+				<ref bean="customerType1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="basicStringType" class="nc.ui.pub.formula.manager.FormulaType">
+		<property name="typeId" value="0"></property>
+		<property name="show" value="false"></property>
+	</bean>
+
+	<bean id="customerType1" class="nc.ui.pub.formula.manager.FormulaType">
+		<property name="typeId" value="customer1"></property>
+		<property name="typeName" value="新类型"></property>
+		<property name="show" value="true"></property>
+		<property name="name2FormulaCommandMap">
+			<map>
+				<entry key="iif">
+					<bean class="nc.vo.pub.formulaset.function.If" />
+				</entry>
+				<entry key="date">
+					<bean class="nc.vo.pub.formulaset.function.Date" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="ifelseConvertor" class="nc.ui.pub.formula.dialog.IfelseConvertor"></bean>
+	<bean id="formulaWordSorter" class="nc.ui.pub.formulaedit.FormulaWordSorter" />
+	<bean id="formulaTokenMarker" class="nc.ui.pub.formula.ui.FormulaTokenMarker" />
+
+</beans>
