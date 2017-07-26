@@ -2,15 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-		
-	<!-- 引入对话框配置文件 -->
-	<!-- <import 
-	  resource="classpath:/nc/ui/mapub/materialpricebase/dialog/priceSources/config/priceSources_head_config.xml" />
-    <import 
-	  resource="classpath:/nc/ui/mapub/materialpricebase/dialog/priceSources/config/priceSources_body_config.xml" />
-	<import 
-     resource="classpath:/nc/ui/mapub/materialpricebase/dialog/pullPrice/config/pullPriceDialog_config.xml" /> 
-     -->
+
 				
     <!-- 环境变量 -->
     <bean id="context" class="nc.vo.uif2.LoginContext" />
@@ -39,17 +31,10 @@
 		<property name="model" ref="manageAppModel"></property>
 		<property name="service" ref="queryProxy"></property>
     </bean>
-	
-
 			
     <!-- 模板容器，负责对模板的统一装载 -->
 	<bean id="templateContainer" class="nc.ui.pubapp.uif2app.view.TemplateContainer">
 		<property name="context" ref="context" />
-		<!-- <property name="nodeKeies">
-			<list>
-				<value>381015</value>
-			</list>
-		</property> -->
 	</bean>
     
     <!-- 查询模板加载bean -->
@@ -242,12 +227,12 @@
 			<list>
 				
 			   <!-- 表头表尾字段编辑前事件 -->
-				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailBeforeEditEvent" />
 					<property name="handler">
-						<bean class="nc.ui.mapub.materialpricebase.handler.CardHeadTailBeforeEditHandler" init-method="initMap"/>
+						<bean class="nc.ui.mapub.costpricebase.handler.CardHeadTailBeforeEditHandler" init-method="initMap"/>
 					</property>
-				</bean> -->
+				</bean>
 
 				<!-- 表头表尾字段编辑后事件-->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
@@ -424,6 +409,47 @@
         <!-- 是否显示合计行 -->
         <property name="showTotalLine" value="false" />
        
+		<property name="blankChildrenFilter">
+			<!-- 简单的根据一个字段是否为空的空行过滤器 -->
+			<bean
+				class="nc.ui.pubapp.uif2app.view.value.SingleFieldBlankChildrenFilter">
+				<!-- 指定用来判断空行的字段名称 -->
+				<property name="fieldName" value="celementid" />
+			</bean>
+		</property>
+		<!-- 表体行操作按钮注册，与表体右键菜单保持一致 -->
+		<property name="bodyLineActions">
+			<list>
+				<!-- 提供了一组默认实现 -->
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyAddLineAction" />
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyInsertLineAction" />
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyDelLineAction" />
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyCopyLineAction" />
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteLineAction">
+					<property name="clearItems">
+						<list>
+							<value>cstuff_bid</value>
+							<value>ts</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteToTailAction">
+					<property name="clearItems">
+						<list>
+							<value>cstuff_bid</value>
+							<value>ts</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="nc.ui.pub.beans.ActionsBar$ActionsBarSeparator" />
+				<bean id="bodyLineEditAction" class="nc.ui.pubapp.uif2app.actions.BodyLineEditAction" />
+				<bean class="nc.ui.pub.beans.ActionsBar$ActionsBarSeparator" />
+				<bean class="nc.ui.pubapp.uif2app.actions.DefaultBodyZoomAction">
+					<property name="pos" value="1" />
+				</bean>
+			</list>
+		</property>       
+       	
     </bean>
 	
 	<!-- 新增按钮 -->
@@ -436,8 +462,8 @@
 				<property name="interceptors">
 					<list>
 						<ref bean="showCardInterceptor" />
-						<!-- <ref bean="isActivityShowInterceptor" />
-						<ref bean="hideOrgsInterceptor" /> -->
+						<!-- <ref bean="isActivityShowInterceptor" /> -->
+						<ref bean="hideOrgsInterceptor" />
 					</list>
 				</property>
 			</bean>
@@ -445,7 +471,7 @@
 	</bean>
     
 		<!-- 用于导入的时候 隐藏表头和表体的工厂 -->
-	<bean id="hideOrgsInterceptor" class="nc.ui.mapub.materialpricebase.interceptor.HideOrgsInterceptor">
+	<bean id="hideOrgsInterceptor" class="nc.ui.mapub.costpricebase.interceptor.HideOrgsInterceptor">
 		<property name="editor" ref="billFormEditor" />
 	</bean>
 				
@@ -473,8 +499,6 @@
 	 class="nc.ui.mapub.materialpricebase.interceptor.EditActionProcessor">
 		<property name="model" ref="manageAppModel" />
 		<property name="editor" ref="billFormEditor" />
-		<!-- <property name="priceRefPanel" ref="priceSourcesRefPanel" /> -->
-		<!-- <property name="priceBodyRefPanel" ref="priceSourcesBodyRefPanel" /> -->
 	</bean>
 	
 	
@@ -499,7 +523,7 @@
 	             <bean class="nc.ui.pubapp.uif2app.validation.TemplateNotNullValidation">
 	                  <property name="billForm" ref="billFormEditor" />
 	             </bean>	
-	             <!-- <ref bean="billBodyUniqueValidator" /> -->
+	             <ref bean="billBodyUniqueValidator" />
 	        </list>
         </property>
     </bean>	
@@ -514,7 +538,7 @@
 			<map>
 				<entry key="itempks">
 					<list>
-						<value>cmaterialid</value>
+						<value>celementid</value>
 					</list>
 				</entry>
 			</map>

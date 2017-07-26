@@ -45,5 +45,11 @@
 			<implementation>nc.impl.mapub.acquirepricelog.AcquirepricelogMaintainServiceImpl</implementation>
 		</component>
 		<!--取价错误日志 end-->
+		<!--费用价格库 begin -->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.costpricebase.ICostPriceBaseMaintainService</interface>
+			<implementation>nc.impl.mapub.costpricebase.CostPriceMaintainServiceImpl</implementation>	
+		</component>
+		<!--费用价格库 end -->
 	</public>
 </module>

@@ -170,12 +170,12 @@
 	<bean id="separatorAction" class="nc.funcnode.ui.action.SeparatorAction" />
 	
 	<!-- 列表视图 -->
-	<!-- <bean id="listView" class="nc.ui.mapub.costpricebase.view.CostPriceListView"
+	<bean id="listView" class="nc.ui.mapub.costpricebase.view.CostPriceListView"
 		init-method="initUI">
 		<property name="model" ref="model"></property>
 		<property name="templateContainer" ref="templateContainer"></property>
-		列表自定义项处理
-		<property name="userdefitemListPreparator">
+		<!-- 列表自定义项处理 -->
+		<!-- <property name="userdefitemListPreparator">
 			<bean class="nc.ui.pubapp.uif2app.view.CompositeBillListDataPrepare">
 				<property name="billListDataPrepares">
 					<list>
@@ -184,8 +184,8 @@
 					</list>
 				</property>
 			</bean>
-		</property>
-	</bean> -->
+		</property> -->
+	</bean>
 	
 	<!-- 列表自定义项处理 -->
 	<!-- <bean name="userdefitemlistPreparator" class="nc.ui.uif2.editor.UserdefitemContainerListPreparator">

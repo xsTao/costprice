@@ -4,6 +4,8 @@
 package nc.impl.mapub.costpricebase;
 
 import nc.bs.mapub.costpricebase.bp.CostPriceBaseDeleteBP;
+import nc.bs.mapub.costpricebase.bp.CostPriceBaseInsertBP;
+import nc.bs.mapub.costpricebase.bp.CostPriceBaseUpdateBP;
 import nc.impl.pubapp.pattern.data.bill.tool.BillTransferTool;
 import nc.itf.mapub.costpricebase.ICostPriceBaseMaintainService;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
@@ -39,9 +41,15 @@ public class CostPriceMaintainServiceImpl implements ICostPriceBaseMaintainServi
      */
     @Override
     public CostPriceAggVO[] insert(CostPriceAggVO[] vos) throws BusinessException {
-        // TODO Auto-generated method stub
+        // 前台界面和后台交互时的单据信息VO的传递处理
+        BillTransferTool<CostPriceAggVO> billTransferTool = new BillTransferTool<CostPriceAggVO>(vos);
+        CostPriceAggVO[] mergedVO = billTransferTool.getClientFullInfoBill();
 
-        return null;
+        // 调用BP
+        CostPriceBaseInsertBP insertBP = new CostPriceBaseInsertBP();
+        CostPriceAggVO[] insertVO = insertBP.insert(mergedVO);
+        // 构造返回数据
+        return billTransferTool.getBillForToClient(insertVO);
     }
 
     /*
@@ -52,8 +60,16 @@ public class CostPriceMaintainServiceImpl implements ICostPriceBaseMaintainServi
      */
     @Override
     public CostPriceAggVO[] update(CostPriceAggVO[] vos) throws BusinessException {
-        // TODO Auto-generated method stub
-        return null;
+        //
+        BillTransferTool<CostPriceAggVO> transferTool = new BillTransferTool<CostPriceAggVO>(vos);
+        // 补全前台VO
+        CostPriceAggVO[] fullBills = transferTool.getClientFullInfoBill();
+        // 获取初始VO
+        CostPriceAggVO[] originBills = transferTool.getOriginBills();
+        CostPriceBaseUpdateBP updateBP = new CostPriceBaseUpdateBP();
+        CostPriceAggVO[] retvos = updateBP.update(fullBills, originBills); // 进行更新操作
+        // 返回修改后数据给前台
+        return transferTool.getBillForToClient(retvos);
     }
 
     /*

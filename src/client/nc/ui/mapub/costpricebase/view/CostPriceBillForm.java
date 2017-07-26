@@ -30,8 +30,8 @@ public class CostPriceBillForm extends ShowUpableBillForm {
     @Override
     public void initUI() {
         super.initUI();
-        // CostPriceBillTableBatchCopy billTableBatchCopy = new CostPriceBillTableBatchCopy();
-        // billTableBatchCopy.setBillCardPanel(this.getBillCardPanel());
+        CostPriceBillTableBatchCopy billTableBatchCopy = new CostPriceBillTableBatchCopy();
+        billTableBatchCopy.setBillCardPanel(this.getBillCardPanel());
         /* this.getBillCardPanel().getBodyPanel().addBatchCopyListener(billTableBatchCopy); */
     }
 

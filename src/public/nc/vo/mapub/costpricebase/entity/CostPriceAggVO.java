@@ -30,8 +30,8 @@ public class CostPriceAggVO extends AbstractBill {
      * @return 单据表头VO
      */
     @Override
-    public CostPriceHeadVO getParent() {
-        return this.getParent();
+    public CostPriceHeadVO getParentVO() {
+        return (CostPriceHeadVO) this.getParent();
     }
 
     /**

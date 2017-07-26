@@ -30,9 +30,10 @@ public class CostPriceQueryServiceImpl implements ICostPriceBaseQueryService {
         // TODO Auto-generated method stub
         try {
             QueryTempletParam param = new QueryTempletParam();
-            param.setPk_org(CMMCommonConstCostPriceBase.PK_ORG);
-            param.setCperiod(CMMCommonConstCostPriceBase.VPERIOD);
-            param.setCproductid(CMMCommonConstCostPriceBase.VPRODUCTCODE);
+            // param.setPk_org(CMMCommonConstCostPriceBase.PK_ORG);
+            // param.setCperiod(CMMCommonConstCostPriceBase.VPERIOD);
+            // param.setCproductid(CMMCommonConstCostPriceBase.VPRODUCTCODE);
+            param.setPk_group(CMMCommonConstCostPriceBase.PK_GROUP);
             CMBillQuery<CostPriceAggVO> qry = new CMBillQuery<CostPriceAggVO>(CostPriceAggVO.class, param);
 
             return qry.queryByQueryScheme(queryScheme);

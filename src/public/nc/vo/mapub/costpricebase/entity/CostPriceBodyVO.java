@@ -9,7 +9,7 @@ import nc.vo.pub.SuperVO;
 import nc.vo.pubapp.pattern.model.meta.entity.vo.VOMetaFactory;
 
 /**
- * <b> 在此处简要描述此类的功能 </b>
+ * <b> 费用价格库明细VO </b>
  * <p>
  * 在此处添加此类的描述信息
  * </p>
