@@ -227,31 +227,31 @@
 			<list>
 				
 			   <!-- 表头表尾字段编辑前事件 -->
-				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailBeforeEditEvent" />
 					<property name="handler">
 						<bean class="nc.ui.mapub.costpricebase.handler.CardHeadTailBeforeEditHandler" init-method="initMap"/>
 					</property>
-				</bean>
+				</bean> -->
 
 				<!-- 表头表尾字段编辑后事件-->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailAfterEditEvent" />
 					<property name="handler">
-						<bean class="nc.ui.mapub.materialpricebase.handler.CardHeadTailAfterEditHandler" init-method="initMap"/>
+						<bean class="nc.ui.mapub.costpricebase.handler.CardHeadTailAfterEditHandler" init-method="initMap"/>
 					</property>
 				</bean>
 				
 				<!-- 表体字段编辑前事件 -->
-				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyBeforeEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
-						<bean  class="nc.ui.mapub.materialpricebase.handler.CardBodyBeforeEditHandler"
+						<bean  class="nc.ui.mapub.costpricebase.handler.CardBodyBeforeEditHandler"
 							init-method="initMap" />
 					</property>
-				</bean> -->
+				</bean>
 
 				<!-- 表体字段编辑后事件 -->
 				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
