@@ -42,6 +42,13 @@ public class CostPriceBaseScaleUtil {
                 CostPriceBodyVO.DPRICE
         }, PosEnum.body, null);
 
-        scale.process();
+        //
+        // scale.setCostPriceCtlInfo(new String[] {
+        // CostPriceHeadVO.ANNUAL
+        // }, PosEnum.head, null);
+        // scale.setCostPriceCtlInfo(new String[] {
+        // CostPriceHeadVO.VPERIOD
+        // }, PosEnum.head, null);
+        // scale.process();
     }
 }

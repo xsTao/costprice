@@ -33,7 +33,7 @@ public class CostPriceQueryServiceImpl implements ICostPriceBaseQueryService {
             // param.setPk_org(CMMCommonConstCostPriceBase.PK_ORG);
             // param.setCperiod(CMMCommonConstCostPriceBase.VPERIOD);
             // param.setCproductid(CMMCommonConstCostPriceBase.VPRODUCTCODE);
-            param.setPk_group(CMMCommonConstCostPriceBase.PK_GROUP);
+            param.setPk_group(CMMCommonConstCostPriceBase.PK_ORG);
             CMBillQuery<CostPriceAggVO> qry = new CMBillQuery<CostPriceAggVO>(CostPriceAggVO.class, param);
 
             return qry.queryByQueryScheme(queryScheme);

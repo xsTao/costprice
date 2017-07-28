@@ -5,6 +5,7 @@ package nc.ui.mapub.costpricebase.view;
 
 import nc.ui.mapub.costpricebase.scale.CostPriceBaseScaleUtil;
 import nc.ui.pubapp.uif2app.view.ShowUpableBillListView;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 
 /**
  * @since v6.3
@@ -19,6 +20,9 @@ public class CostPriceListView extends ShowUpableBillListView {
     public void initUI() {
         super.initUI();
         new CostPriceBaseScaleUtil().setListScale(this.getModel().getContext().getPk_group(), this.getBillListPanel());
+        this.getBillListPanel().getHeadBillModel().setSortColumn(new String[] {
+            CostPriceHeadVO.PK_ORG, CostPriceHeadVO.CCOSTPRICEID
+        });
     }
 
 }

@@ -52,15 +52,22 @@ public class CelementidHandler extends CMBasedocAbstractHandler {
         if (CMMapUtil.isNotEmpty(financeOrgIDs)) {
             financeID = financeOrgIDs.get(pk_org);
         }
-        // 不含材料子项的核算要素只能是非材料且非合并明细的、非作业类的要素 -
-        // 非末级要素可见，但是不可选
-        FilterFactorRefUtil.factorRefFilterForFee(financeID, billItem);
-        // 材料有值时，核算要素不可编辑
-        Object material = beforeEdit.getBillCardPanel().getBodyValueAt(beforeEdit.getRow(), CostPriceBodyVO.CELEMENTID);
-
-        if (null != material) {
-            beforeEdit.getBillCardPanel().setCellEditable(beforeEdit.getRow(), CostPriceBodyVO.CELEMENTID, false);
+        // 过滤核算要素
+        try {
+            FilterFactorRefUtil.factorRefFilterByStockORGAndEnable(billItem, financeID);
         }
+        catch (Exception e2) {
+            // TODO: handle exception
+            ExceptionUtils.wrapException(e2);
+        }
+        // 材料有值时，核算要素不可编辑
+        /*
+         * Object material = beforeEdit.getBillCardPanel().getBodyValueAt(beforeEdit.getRow(),
+         * CostPriceBodyVO.CELEMENTID);
+         * if (null != material) {
+         * beforeEdit.getBillCardPanel().setCellEditable(beforeEdit.getRow(), CostPriceBodyVO.CELEMENTID, false);
+         * }
+         */
         beforeEdit.setReturnValue(Boolean.TRUE);
     }
 

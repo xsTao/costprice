@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
 
+import nc.ui.pub.bill.BillCardPanel;
 import nc.ui.pub.bill.BillItem;
 import nc.ui.pubapp.uif2app.model.BillManageModel;
 import nc.ui.pubapp.uif2app.view.BillForm;
+import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 import nc.ui.uif2.actions.ActionInterceptor;
 
 /**
@@ -33,7 +35,7 @@ public class AddActionProcessor implements ActionInterceptor {
     @Override
     public boolean afterDoActionFailed(Action action, ActionEvent event, Throwable throwable) {
         // TODO Auto-generated method stub
-        System.out.println("action: " + action + " event " + event);
+
         return true;
     }
 
@@ -44,7 +46,10 @@ public class AddActionProcessor implements ActionInterceptor {
     @Override
     public void afterDoActionSuccessed(Action arg0, ActionEvent arg1) {
         // TODO Auto-generated method stub
-        System.out.println("afterDoActionSuccessed");
+        BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+        if (null != billCardPanel) {
+
+        }
     }
 
     /*
@@ -54,7 +59,7 @@ public class AddActionProcessor implements ActionInterceptor {
     @Override
     public boolean beforeDoAction(Action action, ActionEvent event) {
         // TODO Auto-generated method stub
-        System.out.println("beforeDoAction " + " action: " + action + "event: " + event);
+
         return true;
     }
 

@@ -7,6 +7,7 @@ import nc.ui.pubapp.uif2app.query2.IQueryConditionDLGInitializer;
 import nc.ui.pubapp.uif2app.query2.QueryConditionDLGDelegator;
 import nc.ui.uif2.model.AbstractUIAppModel;
 import nc.vo.mapub.costpricebase.entity.CMMCommonConstCostPriceBase;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 
 /**
  * 费用价格查询初始化
@@ -53,9 +54,9 @@ public class CostPriceQueryConditionInitializer implements IQueryConditionDLGIni
         condDLGDelegator.registerNeedPermissionOrgFieldCode(CMMCommonConstCostPriceBase.PK_ORG);
 
         // // 处理冗余字段，过滤 参数1:组织，参数2 子元数据对应路径
-        // condDLGDelegator.addRedundancyInfo(CostPriceHeadVO.PK_ORG, "itempks.pk_org");
+        condDLGDelegator.addRedundancyInfo(CostPriceHeadVO.PK_ORG, "itempks.pk_org");
         // // 处理冗余字段，过滤 参数1:集团，参数2 子元数据对应路径
-        // condDLGDelegator.addRedundancyInfo(CostPriceHeadVO.PK_GROUP, "itempks.pk_group");
+        condDLGDelegator.addRedundancyInfo(CostPriceHeadVO.PK_GROUP, "itempks.pk_group");
         //
         // // 自定义项与自由项,启用成参照,用组织过滤 //modify by zhangchd
         // CMQMarAndDefFilter marAndDefQueryFilter = new CMQMarAndDefFilter(condDLGDelegator);

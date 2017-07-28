@@ -8,8 +8,10 @@ import java.util.Map;
 
 import nc.ui.bd.pub.handler.CMBasedocAbstractHandler;
 import nc.ui.bd.pub.handler.CMBasedocEventHandler;
+import nc.ui.mapub.costpricebase.handler.head.AnnualHandler;
 import nc.ui.pubapp.uif2app.event.IAppEventHandler;
 import nc.ui.pubapp.uif2app.event.card.CardHeadTailAfterEditEvent;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 
 /**
  * @since v6.3
@@ -40,9 +42,10 @@ public class CardHeadTailAfterEditHandler extends CMBasedocEventHandler implemen
      */
     @Override
     public void initMap() {
+
         // TODO Auto-generated method stub
         Map<String, Class<?>> handlerMap = new HashMap<String, Class<?>>();
-        // handlerMap.put(CostPriceHeadVO.PK_ORG,Pk_orgHandler.class);
+        handlerMap.put(CostPriceHeadVO.ANNUAL, AnnualHandler.class);
         this.putAllHandler(handlerMap);
     }
 

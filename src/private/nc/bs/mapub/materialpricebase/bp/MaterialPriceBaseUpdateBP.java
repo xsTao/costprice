@@ -107,6 +107,5 @@ public class MaterialPriceBaseUpdateBP {
         // IRule<MaterialPriceBaseAggVO> cmMarAssistantRule = new
         // CMMarAssistantRule(MaterialPriceBaseBodyVO.CMATERIALID);
         // processer.addAfterRule(cmMarAssistantRule);
-
     }
 }

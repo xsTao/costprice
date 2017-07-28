@@ -97,20 +97,20 @@
 		class="nc.ui.pubapp.uif2app.view.value.MultiFieldsBlankChildrenFilter">
 		<property name="NullAssertByOr" value="false" />
 		<!-- 指定用来判断空行的字段名称，可能多数情况下是物料字段 -->
-		<property name="filterMap">
+		<!-- <property name="filterMap">
 			<map>
 				<entry>
 					<key>
-						<!--页签code -->
+						页签code
 						<value>itempks</value>
 					</key>
 					<list>
-						<!--检验是否空行字段code (材料编码)-->
+						检验是否空行字段code (材料编码)
 						<value>cmaterialid</value>
 					</list>
 				</entry>
 			</map>
-		</property>
+		</property> -->
 	</bean>
     
     
@@ -259,7 +259,7 @@
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
-						<bean class="nc.ui.mapub.materialpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
+						<bean class="nc.ui.mapub.costpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
 					</property>
 				</bean> -->
 
@@ -274,8 +274,8 @@
 					</property> 
 				</bean>
 
-				<!-- 改变事件 -->
-				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<!-- 主组织改变事件 -->
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.OrgChangedEvent" />
 					<property name="handler">
@@ -283,7 +283,7 @@
 							<constructor-arg ref="billFormEditor" />
 						</bean>
 					</property>
-				</bean> -->
+				</bean>
 								
 				<!-- 行编辑后事件 -->
 				<!--
@@ -428,16 +428,14 @@
 				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteLineAction">
 					<property name="clearItems">
 						<list>
-							<value>cstuff_bid</value>
-							<value>ts</value>
+							<value>celementid</value>
 						</list>
 					</property>
 				</bean>
 				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteToTailAction">
 					<property name="clearItems">
 						<list>
-							<value>cstuff_bid</value>
-							<value>ts</value>
+							<value>celement</value>
 						</list>
 					</property>
 				</bean>
@@ -484,9 +482,9 @@
 			<!-- <bean class="nc.ui.pubapp.uif2app.actions.interceptor.ShowUpComponentInterceptor"> -->
 				<property name="interceptors">
 					<list>
-						<!-- <ref bean="editInterceptor" />
+						<!-- <ref bean="editInterceptor" /> -->
 						<ref bean="showCardInterceptor" />
-						<ref bean="hideOrgsInterceptor" />	 -->						
+						<ref bean="hideOrgsInterceptor" />							
 					</list>
 				</property>
 				<!-- <property name="showUpComponent" ref="billFormEditor" /> -->
@@ -496,7 +494,7 @@
     
     <!-- 拦截器：修改按钮的拦截器-->
 	<bean id="editInterceptor"
-	 class="nc.ui.mapub.materialpricebase.interceptor.EditActionProcessor">
+	 class="nc.ui.mapub.costpricebase.interceptor.EditActionProcessor">
 		<property name="model" ref="manageAppModel" />
 		<property name="editor" ref="billFormEditor" />
 	</bean>
@@ -527,7 +525,7 @@
 	        </list>
         </property>
     </bean>	
-    <!-- 保存时的表体唯一性校验 （表体材料编码） -->
+    <!-- 保存时的表体唯一性校验 （表体核算要素编码） -->
 	<bean id="billBodyUniqueValidator" class="nc.ui.cmpub.framework.validation.CMBillBodyUniqueValidator">
 		<property name="editor" ref="billFormEditor" />
 		<property name="unionValidateBodyMap">
@@ -558,7 +556,17 @@
 		<bean class="nc.ui.mapub.materialpricebase.interceptor.CopyActionProcessor"></bean>
 		</property>
 	</bean>
-
+ 	<!-- 会计期间 -->
+	<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+		<property name="event" value="nc.ui.uif2.AppEvent" />
+		<property name="handler">
+			<bean class="nc.ui.cmpub.framework.eventhandler.CMPeriodHandler">
+				<property name="billListView" ref="listView" />
+				<property name="periodKey" value="vperiod" />
+			</bean>
+		</property>
+	</bean>
+	
 	<!-- 查询初始化 -->
 	<bean id="qryCondInitializer" class="nc.ui.mapub.costpricebase.query.CostPriceQueryConditionInitializer" />
 	
