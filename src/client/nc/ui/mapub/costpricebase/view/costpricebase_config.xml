@@ -435,7 +435,7 @@
 				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteToTailAction">
 					<property name="clearItems">
 						<list>
-							<value>celement</value>
+							<value>celementid</value>
 						</list>
 					</property>
 				</bean>
@@ -553,7 +553,7 @@
         <property name="interceptor" ref="showCardInterceptor" />
 		<property name="editor" ref="billFormEditor" />
 		<property name="copyActionProcessor">
-		<bean class="nc.ui.mapub.materialpricebase.interceptor.CopyActionProcessor"></bean>
+		<bean class="nc.ui.mapub.costpricebase.interceptor.CopyActionProcessor"></bean>
 		</property>
 	</bean>
  	<!-- 会计期间 -->

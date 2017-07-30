@@ -18,7 +18,7 @@ public class CostPriceBaseDeleteBP {
         DeleteBPTemplate<CostPriceAggVO> bp = new DeleteBPTemplate<CostPriceAggVO>(MaterialPriceBasePluginPoint.DELETE);
         // // 增加执行前业务规则
         // this.addBeforeRule(bp.getAroundProcesser());
-        // // 增加执行后业务规则
+        // 增加执行后业务规则
         // this.addAfterRule(bp.getAroundProcesser());
         bp.delete(bills);
     }

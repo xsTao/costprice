@@ -31,15 +31,15 @@ public class CostPriceBaseScaleUtil {
     }
 
     // 设置打印精度
-    public void setPrintScale(String pk_group, CostPriceAggVO[] bills) {
-        this.setScale(new BillVOScaleProcessor(pk_group, bills));
-    }
+    // public void setPrintScale(String pk_group, CostPriceAggVO[] bills) {
+    // this.setScale(new BillVOScaleProcessor(pk_group, bills));
+    // }
 
     private void setScale(BillScaleProcessor scale) {
 
         // 单价精度
         scale.setCostPriceCtlInfo(new String[] {
-                CostPriceBodyVO.DPRICE
+            CostPriceBodyVO.DPRICE
         }, PosEnum.body, null);
 
         //
@@ -50,5 +50,16 @@ public class CostPriceBaseScaleUtil {
         // CostPriceHeadVO.VPERIOD
         // }, PosEnum.head, null);
         // scale.process();
+    }
+
+    /**
+     * 打印精度
+     * 
+     * @param pk_group
+     * @param vos
+     */
+    public void setPrintScale(String pk_group, CostPriceAggVO[] vos) {
+        // TODO Auto-generated method stub
+        this.setScale(new BillVOScaleProcessor(pk_group, vos));
     }
 }
