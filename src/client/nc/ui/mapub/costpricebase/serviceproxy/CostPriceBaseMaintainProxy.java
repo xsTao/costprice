@@ -26,7 +26,7 @@ public class CostPriceBaseMaintainProxy implements IDataOperationService {
     @Override
     public IBill[] delete(IBill[] bills) throws BusinessException {
         // 目前的删除并不是走这个方法，由于pubapp不支持从这个服务中执行删除操作
-        // 单据的删除实际上使用的是：nc.ui.mmpd.samplebill.serviceproxy.SampleDeleteProxy
+        // 单据的删除实际上使用的是：nc.ui.mapub.costpricebase.serviceproxy.CostPriceBaseDeleteProxy
         return null;
     }
 

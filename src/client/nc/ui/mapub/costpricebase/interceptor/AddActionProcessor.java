@@ -13,6 +13,7 @@ import nc.ui.pubapp.uif2app.model.BillManageModel;
 import nc.ui.pubapp.uif2app.view.BillForm;
 import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 import nc.ui.uif2.actions.ActionInterceptor;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 
 /**
  * @since v6.3
@@ -48,7 +49,9 @@ public class AddActionProcessor implements ActionInterceptor {
         // TODO Auto-generated method stub
         BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
         if (null != billCardPanel) {
-
+            Object orgrefItem = billCardPanel.getHeadItem(CostPriceHeadVO.PK_ORG).getValueObject();
+            System.out.println(orgrefItem);
+            billCardPanel.setBillData(billCardPanel.getBillData());
         }
     }
 

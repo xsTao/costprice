@@ -36,7 +36,7 @@ public class AddHandler implements IAppEventHandler<AddEvent> {
         String pk_org = e.getContext().getPk_org();
         String pk_group = e.getContext().getPk_group();
         Map<String, String> orgOidToVidMap = BDAdapter.getNewVIDSByOrgIDS(new String[] {
-            pk_org
+                pk_org
         });
         // 获得卡片面板
         BillCardPanel panel = e.getBillForm().getBillCardPanel();
@@ -48,6 +48,7 @@ public class AddHandler implements IAppEventHandler<AddEvent> {
         }
         // 设置日期默认值
         this.setDefaultDate(panel);
+
     }
 
     /**

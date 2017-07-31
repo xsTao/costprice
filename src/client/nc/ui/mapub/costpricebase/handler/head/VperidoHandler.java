@@ -12,10 +12,10 @@ import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 
 /**
  * @since v6.3
- * @version 2017年7月28日 下午2:58:00
+ * @version 2017年7月31日 下午9:13:10
  * @author Administrator
  */
-public class AnnualHandler extends CMBasedocAbstractHandler {
+public class VperidoHandler extends CMBasedocAbstractHandler {
 
     /*
      * (non-Javadoc)
@@ -37,13 +37,12 @@ public class AnnualHandler extends CMBasedocAbstractHandler {
         CardHeadTailAfterEditEvent beforeEdit = (CardHeadTailAfterEditEvent) e;
         BillCardPanel panel = beforeEdit.getBillCardPanel();
         BillItem billItem = panel.getHeadItem(beforeEdit.getKey());
-        if (panel.getHeadItem(CostPriceHeadVO.ANNUAL).getValueObject() != null) {
-            panel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(false);
+        if (panel.getHeadItem(CostPriceHeadVO.VPERIOD).getValueObject() != null) {
+            panel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(false);
         }
         else {
-            panel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(true);
+            panel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(true);
         }
-
     }
 
 }

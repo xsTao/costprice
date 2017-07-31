@@ -8,6 +8,7 @@ import nc.bd.business.rule.DeleteAuditRule;
 import nc.bd.business.rule.FillAddDataRule;
 import nc.bs.mapub.costpricebase.plugin.bpplugin.CostPriceBasePluginPoint;
 import nc.bs.mapub.costpricebase.rule.CostPriceHeadRepeatRule;
+import nc.bs.pubapp.pub.rule.CheckNotNullRule;
 import nc.bs.pubapp.pub.rule.FieldLengthCheckRule;
 import nc.bs.pubapp.pub.rule.OrgDisabledCheckRule;
 import nc.impl.pubapp.pattern.data.bill.template.InsertBPTemplate;
@@ -31,6 +32,13 @@ public class CostPriceBaseInsertBP {
         // 插入之后操作
         this.addAfterRule(bp.getAroundProcesser());
 
+        /*
+         * for(CostPriceAggVO bill : bills){
+         * CostPriceBodyVO[] item = bill.getItemVO();
+         * item.setCcostpriceid(bills[0].getParentVO().getCcostpriceid());
+         * }
+         */
+
         return bp.insert(bills);
     }
 
@@ -44,8 +52,8 @@ public class CostPriceBaseInsertBP {
         // TODO Auto-generated method stub
         // 检查表体不能为空
         @SuppressWarnings("unchecked")
-        // IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
-        // processer.addBeforeRule(checkNotNullRule);
+        IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
+        processer.addBeforeRule(checkNotNullRule);
         // 删除审计信息（用于复制按钮，复制时需要清除创建信息和修改信息）
         IRule deleteAuditRule = new DeleteAuditRule();
         processer.addBeforeRule(deleteAuditRule);

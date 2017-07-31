@@ -112,10 +112,7 @@
 			</map>
 		</property> -->
 	</bean>
-    
-    
-    
-    
+  
 	<!-- 快速查询区域 -->
 	<bean id="queryArea" class="nc.ui.pubapp.uif2app.tangramlayout.UEQueryAreaShell"
 		init-method="initUI">
@@ -459,9 +456,11 @@
 				class="nc.ui.pubapp.uif2app.actions.interceptor.CompositeActionInterceptor">
 				<property name="interceptors">
 					<list>
+						
 						<ref bean="showCardInterceptor" />
 						<!-- <ref bean="isActivityShowInterceptor" /> -->
 						<ref bean="hideOrgsInterceptor" />
+						<!-- <ref bean="addInterceptor" /> -->
 					</list>
 				</property>
 			</bean>
@@ -631,7 +630,7 @@
 	</bean>
 	
 	<!-- 打印精度处理器、用于注册精度监听 -->	
-	<bean id="printProcessor" class="nc.ui.mapub.materialpricebase.scale.MaterialPriceBasePrintScaleProcessor">
+	<bean id="printProcessor" class="nc.ui.mapub.costpricebase.scale.CostPriceBasePrintScaleProcessor">
 		<property name="model" ref="manageAppModel" />
 	</bean>
 		    
