@@ -221,8 +221,7 @@
 		<bean id="eventMediator" class="nc.ui.pubapp.uif2app.model.AppEventHandlerMediator">
 		<property name="model" ref="manageAppModel" />
 		<property name="handlerGroup">
-			<list>
-				
+			<list>			
 			   <!-- 表头表尾字段编辑前事件 -->
 				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailBeforeEditEvent" />
@@ -251,14 +250,14 @@
 				</bean>
 
 				<!-- 表体字段编辑后事件 -->
-				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
 						<bean class="nc.ui.mapub.costpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
 					</property>
-				</bean> -->
+				</bean>
 
 				<!-- 新增事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
@@ -383,7 +382,7 @@
     <bean id="addInterceptor" 
       class="nc.ui.mapub.costpricebase.interceptor.AddActionProcessor">
 		<property name="model" ref="manageAppModel" />
-		<!-- <property name="editor" ref="billFormEditor" /> -->
+		<property name="editor" ref="billFormEditor" />
 		<!-- <property name="orgpanel" ref="orgPanel" /> -->
 		<!-- <property name="priceRefPanel" ref="priceSourcesRefPanel" /> -->
 		<!-- <property name="priceBodyRefPanel" ref="priceSourcesBodyRefPanel" /> -->
@@ -456,11 +455,11 @@
 				class="nc.ui.pubapp.uif2app.actions.interceptor.CompositeActionInterceptor">
 				<property name="interceptors">
 					<list>
-						
-						<ref bean="showCardInterceptor" />
+						<ref bean="addInterceptor" />
+						<!-- <ref bean="showCardInterceptor" /> -->
 						<!-- <ref bean="isActivityShowInterceptor" /> -->
 						<ref bean="hideOrgsInterceptor" />
-						<!-- <ref bean="addInterceptor" /> -->
+						
 					</list>
 				</property>
 			</bean>

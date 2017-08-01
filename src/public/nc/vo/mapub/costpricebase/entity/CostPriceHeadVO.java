@@ -6,6 +6,7 @@ package nc.vo.mapub.costpricebase.entity;
 
 import nc.vo.pub.IVOMeta;
 import nc.vo.pub.SuperVO;
+import nc.vo.pub.lang.UFDateTime;
 import nc.vo.pubapp.pattern.model.meta.entity.vo.VOMetaFactory;
 
 /**
@@ -322,8 +323,8 @@ public class CostPriceHeadVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public String getCreatetime() {
-        return (String) this.getAttributeValue("createtime");
+    public UFDateTime getCreatetime() {
+        return (UFDateTime) this.getAttributeValue("createtime");
     }
 
     /**
@@ -333,7 +334,7 @@ public class CostPriceHeadVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public void setCreatetime(String createtime) {
+    public void setCreatetime(UFDateTime createtime) {
         this.setAttributeValue("createtime", createtime);
     }
 
@@ -366,8 +367,8 @@ public class CostPriceHeadVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public String getModifiedtime() {
-        return (String) this.getAttributeValue("modifiedtime");
+    public UFDateTime getModifiedtime() {
+        return (UFDateTime) this.getAttributeValue("modifiedtime");
     }
 
     /**
@@ -377,7 +378,7 @@ public class CostPriceHeadVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public void setModifiedtime(String modifiedtime) {
+    public void setModifiedtime(UFDateTime modifiedtime) {
         this.setAttributeValue("modifiedtime", modifiedtime);
     }
 

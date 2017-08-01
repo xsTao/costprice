@@ -45,7 +45,7 @@ public class AddActionProcessor implements ActionInterceptor {
      * @see nc.ui.uif2.actions.ActionInterceptor#afterDoActionSuccessed(javax.swing.Action, java.awt.event.ActionEvent)
      */
     @Override
-    public void afterDoActionSuccessed(Action arg0, ActionEvent arg1) {
+    public void afterDoActionSuccessed(Action action, ActionEvent e) {
         // TODO Auto-generated method stub
         BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
         if (null != billCardPanel) {
@@ -62,7 +62,7 @@ public class AddActionProcessor implements ActionInterceptor {
     @Override
     public boolean beforeDoAction(Action action, ActionEvent event) {
         // TODO Auto-generated method stub
-
+        BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
         return true;
     }
 

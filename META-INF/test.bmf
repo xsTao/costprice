@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><component conRouterType="手动" createIndustry="0" createTime="2017-08-01 12:37:29" creator="" description="" displayName="测试" fromSourceBmf="true" gencodestyle="NC传统样式" help="" id="762edde4-201a-49b9-a48a-0d6a170bb18e" industry="0" industryChanged="false" industryIncrease="false" industryName="基础行业" isSource="false" isbizmodel="false" mainEntity="7792fca7-6baa-45bd-9183-09071169e480" metaType=".bmf" modifier="" modifyIndustry="0" modifyTime="2017-08-01 12:42:08" name="component" namespace="test" ownModule="test" preLoad="false" programcode="0" resModuleName="test" resid="" version="5" versionType="0">
+    <celllist>
+        <entity accessorClassName="nc.md.model.access.javamap.AggVOStyle" bizItfImpClassName="" componentID="762edde4-201a-49b9-a48a-0d6a170bb18e" createIndustry="0" createTime="2017-08-01 12:38:23" creator="" czlist="" description="" displayName="测试主体" fullClassName="nc.vo.test.Entity.testHeadVO" height="100" help="" id="7792fca7-6baa-45bd-9183-09071169e480" industryChanged="false" isAuthen="true" isCreateSQL="true" isExtendBean="false" isPrimary="true" isSource="true" keyAttributeId="3f077e4d-fe3f-4008-b847-e433a277af2a" modInfoClassName="" modifier="" modifyIndustry="0" modifyTime="2017-08-01 13:11:08" name="ts_test" resid="" stereoType="" tableName="ts_test" userDefClassName="" versionType="0" visibility="public" width="100" x="270" y="83">
+            <attributelist>
+                <attribute accessStrategy="" accesspower="false" accesspowergroup="" calculation="false" classID="7792fca7-6baa-45bd-9183-09071169e480" createIndustry="0" dataType="BS000010000100001051" dataTypeStyle="SINGLE" dbtype="char" defaultValue="" description="" displayName="测试主体主键" dynamic="true" dynamicTable="" fieldName="ctestid" fieldType="char" fixedLength="false" forLocale="false" help="" id="3f077e4d-fe3f-4008-b847-e433a277af2a" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="true" isNullable="false" isReadOnly="false" isShare="false" isSource="true" length="20" maxValue="" minValue="" modifyIndustry="0" name="ctestid" notSerialize="false" precise="" refModelName="" resid="" sequence="0" typeDisplayName="UFID" typeName="UFID" versionType="0" visibility="public"/>
+                <attribute accessStrategy="" accesspower="false" accesspowergroup="" calculation="false" classID="7792fca7-6baa-45bd-9183-09071169e480" createIndustry="0" dataType="BS000010000100001001" dataTypeStyle="SINGLE" dbtype="varchar" defaultValue="" description="" displayName="名称" dynamic="true" dynamicTable="" fieldName="name" fieldType="varchar" fixedLength="false" forLocale="false" help="" id="5f9baa72-65f3-4e89-a8c9-8c0fbb2f280c" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="false" isNullable="true" isReadOnly="false" isShare="false" isSource="true" length="50" maxValue="" minValue="" modifyIndustry="0" name="name" notSerialize="false" precise="" refModelName="" resid="" sequence="1" typeDisplayName="String" typeName="String" versionType="0" visibility="public"/>
+                <attribute accessStrategy="nc.md.model.access.BodyOfAggVOAccessor" accesspower="false" accesspowergroup="" calculation="false" classID="7792fca7-6baa-45bd-9183-09071169e480" createIndustry="0" dataType="e00d385a-09e5-4014-8ab1-73704c1d8ded" dataTypeStyle="ARRAY" dbtype="" defaultValue="~" description="" displayName="测试明细" dynamic="true" dynamicTable="" fieldName="ctestid" fieldType="varchar" fixedLength="false" forLocale="false" help="" id="3dda078f-5a20-425a-b957-a43f7c4b559a" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="false" isNullable="true" isReadOnly="false" isShare="false" isSource="true" length="" maxValue="" minValue="" modifyIndustry="0" name="itempks" notSerialize="false" precise="" refModelName="" resid="" sequence="2" typeDisplayName="测试明细" typeName="ts_test_b" versionType="0" visibility="public"/>
+            </attributelist>
+            <operationlist/>
+            <busiitfs/>
+            <busimaps/>
+            <canzhaolist/>
+            <accessor classFullname="nc.md.model.access.javamap.AggVOStyle" displayName="AggVO" name="AggVO">
+                <properties>
+                    <property classid="7792fca7-6baa-45bd-9183-09071169e480" displayName="包装类名" name="wrapclsname" sequence="0" value="nc.vo.test.Entity.AggtestHeadVO"/>
+                </properties>
+            </accessor>
+        </entity>
+        <entity accessorClassName="nc.md.model.access.javamap.NCBeanStyle" bizItfImpClassName="" componentID="762edde4-201a-49b9-a48a-0d6a170bb18e" createIndustry="0" createTime="2017-08-01 12:38:27" creator="" czlist="" description="" displayName="测试明细" fullClassName="nc.vo.test.entity.testBodyVO" height="100" help="" id="e00d385a-09e5-4014-8ab1-73704c1d8ded" industryChanged="false" isAuthen="true" isCreateSQL="true" isExtendBean="false" isPrimary="false" isSource="true" keyAttributeId="2d56f91d-a731-4255-9d22-e3d5f99a0fb6" modInfoClassName="" modifier="" modifyIndustry="0" modifyTime="2017-08-01 13:11:08" name="ts_test_b" resid="" stereoType="" tableName="ts_test_b" userDefClassName="" versionType="0" visibility="public" width="100" x="530" y="91">
+            <attributelist>
+                <attribute accessStrategy="" accesspower="false" accesspowergroup="" calculation="false" classID="e00d385a-09e5-4014-8ab1-73704c1d8ded" createIndustry="0" dataType="BS000010000100001051" dataTypeStyle="SINGLE" dbtype="char" defaultValue="" description="" displayName="测试子体主键" dynamic="true" dynamicTable="" fieldName="ctest_bid" fieldType="char" fixedLength="false" forLocale="false" help="" id="2d56f91d-a731-4255-9d22-e3d5f99a0fb6" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="true" isNullable="false" isReadOnly="false" isShare="false" isSource="true" length="20" maxValue="" minValue="" modifyIndustry="0" name="ctest_bid" notSerialize="false" precise="" refModelName="" resid="" sequence="0" typeDisplayName="UFID" typeName="UFID" versionType="0" visibility="public"/>
+                <attribute accessStrategy="" accesspower="false" accesspowergroup="" calculation="false" classID="e00d385a-09e5-4014-8ab1-73704c1d8ded" createIndustry="0" dataType="BS000010000100001051" dataTypeStyle="SINGLE" dbtype="char" defaultValue="" description="" displayName="测试主体" dynamic="true" dynamicTable="" fieldName="ctestid" fieldType="char" fixedLength="false" forLocale="false" help="" id="d68e500c-cc08-4a57-90da-213a62e19981" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="false" isNullable="true" isReadOnly="false" isShare="false" isSource="true" length="20" maxValue="" minValue="" modifyIndustry="0" name="ctestid" notSerialize="false" precise="" refModelName="" resid="" sequence="1" typeDisplayName="UFID" typeName="UFID" versionType="0" visibility="public"/>
+                <attribute accessStrategy="" accesspower="false" accesspowergroup="" calculation="false" classID="e00d385a-09e5-4014-8ab1-73704c1d8ded" createIndustry="0" dataType="BS000010000100001001" dataTypeStyle="SINGLE" dbtype="varchar" defaultValue="" description="" displayName="子名称" dynamic="true" dynamicTable="" fieldName="name" fieldType="varchar" fixedLength="false" forLocale="false" help="" id="6f685e75-368d-4a53-9935-997d7dedf4bc" industryChanged="false" isActive="true" isAuthorization="true" isDefaultDimensionAttribute="false" isDefaultMeasureAttribute="false" isFeature="false" isGlobalization="false" isHide="false" isKey="false" isNullable="true" isReadOnly="false" isShare="false" isSource="true" length="50" maxValue="" minValue="" modifyIndustry="0" name="name" notSerialize="false" precise="" refModelName="" resid="" sequence="2" typeDisplayName="String" typeName="String" versionType="0" visibility="public"/>
+            </attributelist>
+            <operationlist/>
+            <busiitfs/>
+            <busimaps/>
+            <canzhaolist/>
+            <accessor classFullname="nc.md.model.access.javamap.NCBeanStyle" displayName="NCVO" name="NCVO">
+                <properties/>
+            </accessor>
+        </entity>
+    </celllist>
+    <connectlist>
+        <AggregationRelation componentID="762edde4-201a-49b9-a48a-0d6a170bb18e" createIndustry="0" createTime="2017-08-01 12:38:53" creator="" description="" displayName="" help="" id="47ee2d9c-3473-404f-a152-fe0940de7db0" industryChanged="false" isSource="false" modifier="" modifyIndustry="0" modifyTime="2017-08-01 12:47:01" name="Aggregation Relation" realsource="7792fca7-6baa-45bd-9183-09071169e480" realtarget="e00d385a-09e5-4014-8ab1-73704c1d8ded" source="7792fca7-6baa-45bd-9183-09071169e480" sourceConstraint="1" srcAttributeid="3dda078f-5a20-425a-b957-a43f7c4b559a" target="e00d385a-09e5-4014-8ab1-73704c1d8ded" targetConstraint="1..n" versionType="0">
+            <points/>
+        </AggregationRelation>
+    </connectlist>
+    <refdepends/>
+    <refdependLoseIDs/>
+    <cellRemoveLog/>
+    <rulers>
+        <ruler isHorizontal="true" unit="0">
+            <guideList/>
+        </ruler>
+        <ruler isHorizontal="false" unit="0">
+            <guideList/>
+        </ruler>
+    </rulers>
+</component>
