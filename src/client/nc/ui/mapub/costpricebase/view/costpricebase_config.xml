@@ -631,7 +631,7 @@
 	</bean>
 	
 	<!-- 打印精度处理器、用于注册精度监听 -->	
-	<bean id="printProcessor" class="nc.ui.mapub.materialpricebase.scale.MaterialPriceBasePrintScaleProcessor">
+	<bean id="printProcessor" class="nc.ui.mapub.costpricebase.scale.CostPriceBasePrintScaleProcessor">
 		<property name="model" ref="manageAppModel" />
 	</bean>
 		    
