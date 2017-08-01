@@ -8,6 +8,8 @@ import nc.bd.business.rule.DeleteAuditRule;
 import nc.bd.business.rule.FillAddDataRule;
 import nc.bs.mapub.costpricebase.plugin.bpplugin.CostPriceBasePluginPoint;
 import nc.bs.mapub.costpricebase.rule.CostPriceHeadRepeatRule;
+import nc.bs.mapub.costpricebase.rule.CostPriceValidateNumRule;
+import nc.bs.pubapp.pub.rule.CheckNotNullRule;
 import nc.bs.pubapp.pub.rule.FieldLengthCheckRule;
 import nc.bs.pubapp.pub.rule.OrgDisabledCheckRule;
 import nc.impl.pubapp.pattern.data.bill.template.InsertBPTemplate;
@@ -26,9 +28,9 @@ public class CostPriceBaseInsertBP {
 
     public CostPriceAggVO[] insert(CostPriceAggVO[] bills) {
         InsertBPTemplate<CostPriceAggVO> bp = new InsertBPTemplate<CostPriceAggVO>(CostPriceBasePluginPoint.INSERT);
-        // 插入之前操作
+        // 插入之前规则
         this.addBeforeRule(bp.getAroundProcesser());
-        // 插入之后操作
+        // 插入之后规则
         this.addAfterRule(bp.getAroundProcesser());
 
         return bp.insert(bills);
@@ -42,10 +44,11 @@ public class CostPriceBaseInsertBP {
     })
     private void addBeforeRule(AroundProcesser<CostPriceAggVO> processer) {
         // TODO Auto-generated method stub
+
         // 检查表体不能为空
-        @SuppressWarnings("unchecked")
-        // IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
-        // processer.addBeforeRule(checkNotNullRule);
+
+        IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
+        processer.addBeforeRule(checkNotNullRule);
         // 删除审计信息（用于复制按钮，复制时需要清除创建信息和修改信息）
         IRule deleteAuditRule = new DeleteAuditRule();
         processer.addBeforeRule(deleteAuditRule);
@@ -61,8 +64,8 @@ public class CostPriceBaseInsertBP {
         IRule<CostPriceAggVO> billAddDataRule = new FillAddDataRule();
         processer.addBeforeFinalRule(billAddDataRule);
 
-        // IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
-        // processer.addBeforeRule(checkLegalNullRule);
+        IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
+        processer.addBeforeRule(checkLegalNullRule);
         //
         // IRule<CostPriceAggVO> distinctCelementsRule = new CostPriceRepeatRule();
         // processer.addBeforeRule(distinctCelementsRule);

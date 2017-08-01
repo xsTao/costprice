@@ -3,11 +3,12 @@
  */
 package nc.ui.mapub.costpricebase.handler;
 
-import nc.ui.er.expensetype.view.BillPanelUtils;
+import nc.ui.cmpub.business.util.CMBillPanelUtils;
 import nc.ui.pubapp.uif2app.event.IAppEventHandler;
 import nc.ui.pubapp.uif2app.event.OrgChangedEvent;
 import nc.ui.pubapp.uif2app.view.BillForm;
 import nc.ui.uif2.ShowStatusBarMsgUtil;
+import nc.vo.mapub.costpricebase.entity.CostPriceBodyVO;
 import nc.vo.uif2.LoginContext;
 
 /**
@@ -36,8 +37,14 @@ public class OrgChangedHandler implements IAppEventHandler<OrgChangedEvent> {
         }
         // 获取上下文
         LoginContext context = this.billForm.getModel().getContext();
-        context.setPk_org(e.getNewPkOrg()); // 设置新的org
-        BillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context); // 设置参照过滤
+        // if (null != e.getNewPkOrg()) {
+        // context.setPk_org(e.getNewPkOrg()); // 设置新的org
+        // }
+        context.setPk_org(e.getNewPkOrg());
+        // BillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context); // 设置参照过滤
+        CMBillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context, new String[] {
+            CostPriceBodyVO.CELEMENTID
+        });
         // 显示状态栏提示信息
         ShowStatusBarMsgUtil.showStatusBarMsg("", context);
 

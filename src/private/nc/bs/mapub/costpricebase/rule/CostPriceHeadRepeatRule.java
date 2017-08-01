@@ -65,10 +65,10 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         sqlBuilder.append("select count(1) from mapub_costprice where ");
         sqlBuilder.append(CostPriceHeadVO.CCOSTPRICEID, vpricecode);
         sqlBuilder.append("and ");
-        if (null != vperiod) {
+        if (CMValueCheck.isNotEmpty(vperiod)) {
             sqlBuilder.append(CostPriceHeadVO.VPERIOD, vperiod);
         }
-        else if (null != annual) {
+        else if (CMValueCheck.isNotEmpty(annual)) {
             sqlBuilder.append(CostPriceHeadVO.ANNUAL, annual);
         }
         sqlBuilder.append("and ");
