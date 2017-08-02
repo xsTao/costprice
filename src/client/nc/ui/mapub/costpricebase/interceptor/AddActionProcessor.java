@@ -49,9 +49,13 @@ public class AddActionProcessor implements ActionInterceptor {
         // TODO Auto-generated method stub
         BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
         if (null != billCardPanel) {
-            Object orgrefItem = billCardPanel.getHeadItem(CostPriceHeadVO.PK_ORG).getValueObject();
-            System.out.println(orgrefItem);
+            // Object orgrefItem = billCardPanel.getHeadItem(CostPriceHeadVO.PK_ORG).getValueObject();
             billCardPanel.setBillData(billCardPanel.getBillData());
+            // 设置会计期间和年度可编辑
+            BillItem annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
+            BillItem period = billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
+            annual.setEdit(true);
+            period.setEdit(true);
         }
     }
 

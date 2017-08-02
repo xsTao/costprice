@@ -15,7 +15,6 @@ import nc.impl.pubapp.pattern.database.DataAccessUtils;
 import nc.impl.pubapp.pattern.rule.IRule;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
-import nc.vo.mapub.materialpricebase.entity.CMMLangConstMaterialPriceBase;
 import nc.vo.pubapp.pattern.data.IRowSet;
 import nc.vo.pubapp.pattern.exception.ExceptionUtils;
 
@@ -51,7 +50,7 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         // 表头
         CostPriceHeadVO headVO = (CostPriceHeadVO) vos[0].getParent();
         // 价格库编码
-        String vpricecode = headVO.getCcostpriceid();
+        // String vpricecode = headVO.getCcostpriceid();
         // 会计期间
         String vperiod = headVO.getVperiod();
         // 年度
@@ -60,16 +59,20 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         String pk_org = headVO.getPkOrg();
         // 集团
         String pk_group = headVO.getPkGroup();
+        // 构造错误消息
+        String msg = "工厂 " + pk_org;
         DataAccessUtils tool = new DataAccessUtils();
         CMSqlBuilder sqlBuilder = new CMSqlBuilder();
         sqlBuilder.append("select count(1) from mapub_costprice where ");
-        sqlBuilder.append(CostPriceHeadVO.CCOSTPRICEID, vpricecode);
-        sqlBuilder.append("and ");
+        // sqlBuilder.append(CostPriceHeadVO.CCOSTPRICEID, vpricecode);
+        // sqlBuilder.append("and ");
         if (CMValueCheck.isNotEmpty(vperiod)) {
             sqlBuilder.append(CostPriceHeadVO.VPERIOD, vperiod);
+            msg += " +会计期间" + vperiod + "已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
         }
         else if (CMValueCheck.isNotEmpty(annual)) {
             sqlBuilder.append(CostPriceHeadVO.ANNUAL, annual);
+            msg += " +年度 " + annual + "已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
         }
         sqlBuilder.append("and ");
         sqlBuilder.append(CostPriceHeadVO.PK_ORG, pk_org);
@@ -79,7 +82,7 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         IRowSet set = tool.query(sqlBuilder.toString());
         if (set.next() && set.getInt(0) > 1) {
             // 说明已存在
-            errorSet.add(CMMLangConstMaterialPriceBase.getMSGCMATERIALPRICE());
+            errorSet.add(msg);
         }
         ValidationFailure failure =
                 new ValidationFailure(nc.vo.jcom.lang.StringUtil.getUnionStr(errorSet.toArray(new String[0]), "\n", ""));

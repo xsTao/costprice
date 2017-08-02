@@ -6,9 +6,14 @@ package nc.ui.mapub.costpricebase.interceptor;
 import java.util.Map;
 
 import nc.bd.framework.base.CMMapUtil;
+import nc.bd.framework.base.CMValueCheck;
 import nc.cmpub.business.adapter.BDAdapter;
+import nc.ui.pub.bill.BillCardPanel;
 import nc.ui.pubapp.AppUiContext;
 import nc.ui.pubapp.uif2app.actions.intf.ICopyActionProcessor;
+import nc.ui.pubapp.uif2app.model.BillManageModel;
+import nc.ui.pubapp.uif2app.view.BillForm;
+import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 import nc.vo.pub.ISuperVO;
@@ -24,6 +29,9 @@ import nc.vo.uif2.LoginContext;
  * @author Administrator
  */
 public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO> {
+    private BillForm editor;
+
+    private BillManageModel model;
 
     /*
      * (non-Javadoc)
@@ -37,6 +45,14 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         this.processHeadVO(billVO, context);
         this.processBodyVO(billVO);
 
+        BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+        Object annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).getValueObject();
+        if (CMValueCheck.isNotEmpty(annual)) {
+            billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(false);
+        }
+        else {
+            billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(false);
+        }
     }
 
     /**
@@ -64,6 +80,7 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
      */
     private void processHeadVO(CostPriceAggVO billVO, LoginContext context) {
         // TODO Auto-generated method stub
+
         CostPriceHeadVO hvo = billVO.getParentVO();
         // 获取当前登陆时间
         UFDate serverDate = AppUiContext.getInstance().getBusiDate();
@@ -86,7 +103,51 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         if (CMMapUtil.isNotEmpty(orgVid)) {
             hvo.setPkOrgV(orgVid.get(context.getPk_org()));
         }
-        // hvo.setAnnual();
+
+    }
+
+    /**
+     * 获得 editor 的属性值
+     *
+     * @return the editor
+     * @since 2017年8月2日
+     * @author Administrator
+     */
+    public BillForm getEditor() {
+        return this.editor;
+    }
+
+    /**
+     * 设置 editor 的属性值
+     *
+     * @param editor the editor to set
+     * @since 2017年8月2日
+     * @author Administrator
+     */
+    public void setEditor(BillForm editor) {
+        this.editor = editor;
+    }
+
+    /**
+     * 获得 model 的属性值
+     *
+     * @return the model
+     * @since 2017年8月2日
+     * @author Administrator
+     */
+    public BillManageModel getModel() {
+        return this.model;
+    }
+
+    /**
+     * 设置 model 的属性值
+     *
+     * @param model the model to set
+     * @since 2017年8月2日
+     * @author Administrator
+     */
+    public void setModel(BillManageModel model) {
+        this.model = model;
     }
 
 }

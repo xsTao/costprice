@@ -15,8 +15,10 @@
 	<bean id="deleteProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBaseDeleteProxy" />
 	<!-- 单据查询代理 -->
 	<bean id="queryProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBaseQueryProxy" />
-	
-     <!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
+	<!-- 分页代理 -->
+	<bean id="paginationProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBasePaginationProxy" />
+    
+    <!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
 	<bean id="boadatorfactory"
 		class="nc.ui.pubapp.uif2app.view.value.AggVOMetaBDObjectAdapterFactory" />
 
@@ -30,8 +32,15 @@
 	<bean id="modelDataManager" class="nc.ui.pubapp.uif2app.query2.model.ModelDataManager">
 		<property name="model" ref="manageAppModel"></property>
 		<property name="service" ref="queryProxy"></property>
+		<property name="paginationModel" ref="paginationmodel"></property>
+		<property name="pageQueryService" ref="pageQueryService" />
     </bean>
-			
+    
+	<bean id="pageQueryService" class="nc.ui.pubapp.uif2app.model.pagination.UIPageQueryService">
+		<property name="allPagePkQueryServiceMethod" value="nc.itf.mapub.ICostPriceBasePaginationService.queryPKs"></property>
+		<property name="dataOfPksQueryServiceMethod" value="nc.itf.mapub.ICostPriceBasePaginationService.queryBillByPK"></property>
+	</bean>		
+	
     <!-- 模板容器，负责对模板的统一装载 -->
 	<bean id="templateContainer" class="nc.ui.pubapp.uif2app.view.TemplateContainer">
 		<property name="context" ref="context" />
@@ -49,6 +58,7 @@
         <property name="model" ref="manageAppModel"/>
         <!-- <property name="billListPanelValueSetter" ref="materialPriceBillListPanelValueSetter" /> -->
 		<property name="templateContainer" ref="templateContainer"/>
+		<property name="south" ref="paginationBar"></property>
         <!-- 列表自定义项处理 -->
 		<!-- <property name="userdefitemListPreparator">
 			<bean class="nc.ui.pubapp.uif2app.view.CompositeBillListDataPrepare">
@@ -250,14 +260,14 @@
 				</bean>
 
 				<!-- 表体字段编辑后事件 -->
-				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
 						<bean class="nc.ui.mapub.costpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
 					</property>
-				</bean>
+				</bean> -->
 
 				<!-- 新增事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
@@ -270,7 +280,7 @@
 					</property> 
 				</bean>
 
-				<!-- 主组织改变事件 -->
+				<!-- 组织改变事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.OrgChangedEvent" />
@@ -456,7 +466,7 @@
 				<property name="interceptors">
 					<list>
 						<ref bean="addInterceptor" />
-						<!-- <ref bean="showCardInterceptor" /> -->
+						<ref bean="showCardInterceptor" />
 						<!-- <ref bean="isActivityShowInterceptor" /> -->
 						<ref bean="hideOrgsInterceptor" />
 						
@@ -480,7 +490,7 @@
 			<!-- <bean class="nc.ui.pubapp.uif2app.actions.interceptor.ShowUpComponentInterceptor"> -->
 				<property name="interceptors">
 					<list>
-						<!-- <ref bean="editInterceptor" /> -->
+						<ref bean="editInterceptor" />
 						<ref bean="showCardInterceptor" />
 						<ref bean="hideOrgsInterceptor" />							
 					</list>
@@ -710,5 +720,18 @@
               <ref bean="outputAction" />
            </list>
        </property>
-    </bean>  
+    </bean>
+    
+    <!-- 分页控件 -->
+	<bean id="paginationBar" class="nc.ui.uif2.components.pagination.PaginationBar" init-method="registeCallbak">
+		<property name="paginationModel" ref="paginationmodel"></property>
+		<property name="context" ref="context" />
+	</bean>
+
+	<!-- 分页模型 -->
+	<bean id="paginationmodel" class="nc.ui.uif2.components.pagination.PaginationModel" init-method="init">
+		<property name="paginationQueryService" ref="paginationProxy"></property>
+	</bean>  
+	
+	
 </beans>

@@ -47,6 +47,7 @@ IAppEventHandler<CardBodyBeforeEditEvent> {
         Map<String, Class<?>> handlerMap = new HashMap<String, Class<?>>();
         handlerMap.put(CostPriceBodyVO.CELEMENTID, CelementidHandler.class);
         this.putAllHandler(handlerMap);
+
     }
 
 }
