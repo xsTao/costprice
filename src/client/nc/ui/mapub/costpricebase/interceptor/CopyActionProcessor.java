@@ -6,14 +6,11 @@ package nc.ui.mapub.costpricebase.interceptor;
 import java.util.Map;
 
 import nc.bd.framework.base.CMMapUtil;
-import nc.bd.framework.base.CMValueCheck;
 import nc.cmpub.business.adapter.BDAdapter;
-import nc.ui.pub.bill.BillCardPanel;
 import nc.ui.pubapp.AppUiContext;
 import nc.ui.pubapp.uif2app.actions.intf.ICopyActionProcessor;
 import nc.ui.pubapp.uif2app.model.BillManageModel;
 import nc.ui.pubapp.uif2app.view.BillForm;
-import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 import nc.vo.pub.ISuperVO;
@@ -45,14 +42,16 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         this.processHeadVO(billVO, context);
         this.processBodyVO(billVO);
 
-        BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
-        Object annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).getValueObject();
-        if (CMValueCheck.isNotEmpty(annual)) {
-            billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(false);
-        }
-        else {
-            billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(false);
-        }
+        /*
+         * BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+         * Object annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).getValueObject();
+         * if (CMValueCheck.isNotEmpty(annual)) {
+         * billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(false);
+         * }
+         * else {
+         * billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(false);
+         * }
+         */
     }
 
     /**
@@ -98,7 +97,7 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         hvo.setPkOrg(context.getPk_org());
         // 组织最新版本
         Map<String, String> orgVid = BDAdapter.getNewVIDSByOrgIDS(new String[] {
-                context.getPk_org()
+            context.getPk_org()
         });
         if (CMMapUtil.isNotEmpty(orgVid)) {
             hvo.setPkOrgV(orgVid.get(context.getPk_org()));

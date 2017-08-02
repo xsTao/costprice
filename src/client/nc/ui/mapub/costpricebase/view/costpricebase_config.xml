@@ -32,8 +32,8 @@
 	<bean id="modelDataManager" class="nc.ui.pubapp.uif2app.query2.model.ModelDataManager">
 		<property name="model" ref="manageAppModel"></property>
 		<property name="service" ref="queryProxy"></property>
-		<property name="paginationModel" ref="paginationmodel"></property>
-		<property name="pageQueryService" ref="pageQueryService" />
+		<!-- <property name="paginationModel" ref="paginationmodel"></property>
+		<property name="pageQueryService" ref="pageQueryService" /> -->
     </bean>
     
 	<bean id="pageQueryService" class="nc.ui.pubapp.uif2app.model.pagination.UIPageQueryService">
@@ -58,7 +58,7 @@
         <property name="model" ref="manageAppModel"/>
         <!-- <property name="billListPanelValueSetter" ref="materialPriceBillListPanelValueSetter" /> -->
 		<property name="templateContainer" ref="templateContainer"/>
-		<property name="south" ref="paginationBar"></property>
+		<!-- <property name="south" ref="paginationBar"></property> -->
         <!-- 列表自定义项处理 -->
 		<!-- <property name="userdefitemListPreparator">
 			<bean class="nc.ui.pubapp.uif2app.view.CompositeBillListDataPrepare">
@@ -723,15 +723,15 @@
     </bean>
     
     <!-- 分页控件 -->
-	<bean id="paginationBar" class="nc.ui.uif2.components.pagination.PaginationBar" init-method="registeCallbak">
+	<!-- <bean id="paginationBar" class="nc.ui.uif2.components.pagination.PaginationBar" init-method="registeCallbak">
 		<property name="paginationModel" ref="paginationmodel"></property>
 		<property name="context" ref="context" />
-	</bean>
+	</bean> -->
 
 	<!-- 分页模型 -->
-	<bean id="paginationmodel" class="nc.ui.uif2.components.pagination.PaginationModel" init-method="init">
+	<!-- <bean id="paginationmodel" class="nc.ui.pubapp.uif2app.model.pagination.PubPaginationModel" init-method="init">
 		<property name="paginationQueryService" ref="paginationProxy"></property>
-	</bean>  
+	</bean>   -->
 	
 	
 </beans>
