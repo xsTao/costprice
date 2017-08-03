@@ -75,5 +75,12 @@
 			<implementation>nc.impl.mapub.costpricebase.CostPriceQueryServiceImpl</implementation>
 		</component>
 		<!--费用价格库查询 end-->
+		
+		<!--费用价格库分页查询 begin-->
+		<component priority="0" singleton="true" remote="true" tx="CMT" supportAlias="true">
+			<interface>nc.itf.mapub.costpricebase.ICostPriceBasePaginationService</interface>
+			<implementation>nc.impl.mapub.costpricebase.CostPricePaginationServiceImpl</implementation>
+		</component>
+		<!--费用价格库分页查询 end-->
 	</public>		
 </module>

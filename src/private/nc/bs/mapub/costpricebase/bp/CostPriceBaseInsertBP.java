@@ -65,6 +65,7 @@ public class CostPriceBaseInsertBP {
         IRule<CostPriceAggVO> billAddDataRule = new FillAddDataRule();
         processer.addBeforeFinalRule(billAddDataRule);
 
+        //  ‰»Î÷µºÏ≤È
         IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
         processer.addBeforeRule(checkLegalNullRule);
         //

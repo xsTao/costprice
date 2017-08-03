@@ -5,6 +5,7 @@ package nc.ui.mapub.costpricebase.query;
 
 import nc.ui.pubapp.uif2app.query2.IQueryConditionDLGInitializer;
 import nc.ui.pubapp.uif2app.query2.QueryConditionDLGDelegator;
+import nc.ui.querytemplate.ICriteriaChangedListener;
 import nc.ui.uif2.model.AbstractUIAppModel;
 import nc.vo.mapub.costpricebase.entity.CMMCommonConstCostPriceBase;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
@@ -70,6 +71,10 @@ public class CostPriceQueryConditionInitializer implements IQueryConditionDLGIni
         // MarAssistantDealer marAssisvb = new MarAssistantDealer();
         // marAssisvb.setPrefix("vbfree");
         // condDLGDelegator.addQueryCondVODealer(marAssisvb);
+    }
+
+    public void registerCriteriaEditorListener(ICriteriaChangedListener listener) {
+
     }
 
 }

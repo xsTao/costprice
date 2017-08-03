@@ -6,11 +6,15 @@ package nc.ui.mapub.costpricebase.interceptor;
 import java.util.Map;
 
 import nc.bd.framework.base.CMMapUtil;
+import nc.bd.framework.base.CMValueCheck;
 import nc.cmpub.business.adapter.BDAdapter;
+import nc.ui.pub.bill.BillCardPanel;
+import nc.ui.pub.bill.BillItem;
 import nc.ui.pubapp.AppUiContext;
 import nc.ui.pubapp.uif2app.actions.intf.ICopyActionProcessor;
 import nc.ui.pubapp.uif2app.model.BillManageModel;
 import nc.ui.pubapp.uif2app.view.BillForm;
+import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 import nc.vo.pub.ISuperVO;
@@ -28,6 +32,8 @@ import nc.vo.uif2.LoginContext;
 public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO> {
     private BillForm editor;
 
+    BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+
     private BillManageModel model;
 
     /*
@@ -42,16 +48,24 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         this.processHeadVO(billVO, context);
         this.processBodyVO(billVO);
 
-        /*
-         * BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
-         * Object annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).getValueObject();
-         * if (CMValueCheck.isNotEmpty(annual)) {
-         * billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD).setEdit(false);
-         * }
-         * else {
-         * billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL).setEdit(false);
-         * }
-         */
+        // BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+        BillItem annual = this.billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
+        BillItem period = this.billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
+        Object annualObj = annual.getValueObject();
+        Object periodObj = period.getValueObject();
+        if (CMValueCheck.isNotEmpty(annualObj)) {
+            annual.setEdit(true);
+            period.setEdit(false);
+        }
+        else if (CMValueCheck.isNotEmpty(periodObj)) {
+            annual.setEdit(false);
+            period.setEdit(true);
+        }
+        else {
+            annual.setEdit(true);
+            period.setEdit(true);
+        }
+
     }
 
     /**
