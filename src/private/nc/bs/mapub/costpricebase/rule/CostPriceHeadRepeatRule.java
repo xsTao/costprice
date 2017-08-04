@@ -50,7 +50,7 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         // 表头
         CostPriceHeadVO headVO = (CostPriceHeadVO) vos[0].getParent();
         // 价格库编码
-        // String vpricecode = headVO.getCcostpriceid();
+        String vpricecode = headVO.getVpricelibcode();
         // 会计期间
         String vperiod = headVO.getVperiod();
         // 年度
@@ -60,19 +60,19 @@ public class CostPriceHeadRepeatRule implements IRule<CostPriceAggVO> {
         // 集团
         String pk_group = headVO.getPkGroup();
         // 构造错误消息
-        String msg = "工厂 " + pk_org;
+        String msg = "同一价格库编码" + vpricecode + "下的 工厂【" + pk_org;
         DataAccessUtils tool = new DataAccessUtils();
         CMSqlBuilder sqlBuilder = new CMSqlBuilder();
         sqlBuilder.append("select count(1) from mapub_costprice where ");
-        // sqlBuilder.append(CostPriceHeadVO.CCOSTPRICEID, vpricecode);
-        // sqlBuilder.append("and ");
+        sqlBuilder.append(CostPriceHeadVO.CCOSTPRICEID, vpricecode);
+        sqlBuilder.append("and ");
         if (CMValueCheck.isNotEmpty(vperiod)) {
             sqlBuilder.append(CostPriceHeadVO.VPERIOD, vperiod);
-            msg += " +会计期间" + vperiod + "已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
+            msg += "】+ 会计期间【" + vperiod + "】已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
         }
         else if (CMValueCheck.isNotEmpty(annual)) {
             sqlBuilder.append(CostPriceHeadVO.ANNUAL, annual);
-            msg += " +年度 " + annual + "已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
+            msg += " 】+年度 【" + annual + "】已经存在，" + "要求【工厂+会计期间唯一】或者【工厂+年度唯一】";
         }
         sqlBuilder.append("and ");
         sqlBuilder.append(CostPriceHeadVO.PK_ORG, pk_org);

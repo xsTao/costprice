@@ -54,18 +54,21 @@ public class EditActionProcessor implements ActionInterceptor {
             Object periodObj = period.getValueObject();
             billCardPanel.setBillData(billCardPanel.getBillData());
             // 设置会计期间和年度的可编辑
-
-            if (CMValueCheck.isNotEmpty(annualObj)) {
+            // 年度不为空，会计为空
+            if (CMValueCheck.isNotEmpty(annualObj) && CMValueCheck.isEmpty(periodObj)) {
                 annual.setEdit(true);
                 period.setEdit(false);
+
             }
-            else if (CMValueCheck.isNotEmpty(periodObj)) {
-                period.setEdit(true);
+            // 年度为空，会计不为空
+            else if (CMValueCheck.isEmpty(annualObj) && CMValueCheck.isNotEmpty(periodObj)) {
                 annual.setEdit(false);
-            }
-            else {
                 period.setEdit(true);
+            }
+            // 年度为空，会计也为空or 年度不为空，会计也不为空
+            else {
                 annual.setEdit(true);
+                period.setEdit(true);
             }
 
         }

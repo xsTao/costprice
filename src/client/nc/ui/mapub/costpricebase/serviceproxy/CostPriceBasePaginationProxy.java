@@ -6,6 +6,7 @@ package nc.ui.mapub.costpricebase.serviceproxy;
 import nc.bs.framework.common.NCLocator;
 import nc.itf.mapub.costpricebase.ICostPriceBasePaginationService;
 import nc.ui.uif2.components.pagination.IPaginationQueryService;
+import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.pub.BusinessException;
 import nc.vo.pubapp.pattern.exception.ExceptionUtils;
 
@@ -23,15 +24,16 @@ public class CostPriceBasePaginationProxy implements IPaginationQueryService {
     @Override
     public Object[] queryObjectByPks(String[] pks) throws BusinessException {
         // TODO Auto-generated method stub
+        CostPriceAggVO[] rets = null;
         ICostPriceBasePaginationService paginationQueryService =
                 NCLocator.getInstance().lookup(ICostPriceBasePaginationService.class);
         try {
-            paginationQueryService.queryBillByPK(pks);
+            rets = paginationQueryService.queryBillByPK(pks);
         }
         catch (Exception e) {
             ExceptionUtils.wrappException(e);
         }
-        return null;
+        return rets;
     }
 
 }

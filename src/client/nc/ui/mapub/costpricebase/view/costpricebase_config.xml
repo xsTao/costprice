@@ -564,6 +564,7 @@
 	<bean id="copyAction" class="nc.ui.pubapp.uif2app.actions.CopyAction">
 		<property name="model" ref="manageAppModel" />
 		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="showCardInterceptor" />
 		<property name="copyActionProcessor" ref="copyInterceptor">		
 		</property>
 	</bean>
@@ -597,11 +598,12 @@
 	</bean>
 
 	<!-- 列表下刷新 -->
+	<!-- <bean id="refreshAction" class="nc.ui.mapub.costpricebase.action.CostPriceRefreshAction"> -->
 	<bean id="refreshAction" class="nc.ui.pubapp.uif2app.query2.action.DefaultRefreshAction">
 		<property name="dataManager" ref="modelDataManager" />
 		<property name="model" ref="manageAppModel" />
 	</bean>
-
+	
 	<!-- 卡片下刷新 -->
 	<bean id="cardRefreshAction" class="nc.ui.pubapp.uif2app.actions.RefreshSingleAction">
 		<property name="model" ref="manageAppModel" />

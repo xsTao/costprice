@@ -32,7 +32,7 @@ import nc.vo.uif2.LoginContext;
 public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO> {
     private BillForm editor;
 
-    BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+    // BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
 
     private BillManageModel model;
 
@@ -48,19 +48,23 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         this.processHeadVO(billVO, context);
         this.processBodyVO(billVO);
 
-        // BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
-        BillItem annual = this.billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
-        BillItem period = this.billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
+        BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
+        BillItem annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
+        BillItem period = billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
         Object annualObj = annual.getValueObject();
         Object periodObj = period.getValueObject();
-        if (CMValueCheck.isNotEmpty(annualObj)) {
+        // 年度不为空，会计为空
+        if (CMValueCheck.isNotEmpty(annualObj) && CMValueCheck.isEmpty(periodObj)) {
             annual.setEdit(true);
             period.setEdit(false);
+
         }
-        else if (CMValueCheck.isNotEmpty(periodObj)) {
+        // 年度为空，会计不为空
+        else if (CMValueCheck.isEmpty(annualObj) && CMValueCheck.isNotEmpty(periodObj)) {
             annual.setEdit(false);
             period.setEdit(true);
         }
+        // 年度为空，会计也为空or 年度不为空，会计也不为空
         else {
             annual.setEdit(true);
             period.setEdit(true);
@@ -111,7 +115,7 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         hvo.setPkOrg(context.getPk_org());
         // 组织最新版本
         Map<String, String> orgVid = BDAdapter.getNewVIDSByOrgIDS(new String[] {
-            context.getPk_org()
+                context.getPk_org()
         });
         if (CMMapUtil.isNotEmpty(orgVid)) {
             hvo.setPkOrgV(orgVid.get(context.getPk_org()));
