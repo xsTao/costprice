@@ -3,6 +3,8 @@
  */
 package nc.ui.mapub.costpricebase.query;
 
+import nc.ui.cmpub.business.filter.CMFactorByOrgFilter;
+import nc.ui.cmpub.business.filter.CMFactorGroupByOrgFilter;
 import nc.ui.pubapp.uif2app.query2.IQueryConditionDLGInitializer;
 import nc.ui.pubapp.uif2app.query2.QueryConditionDLGDelegator;
 import nc.ui.uif2.model.AbstractUIAppModel;
@@ -51,6 +53,7 @@ public class CostPriceQueryConditionInitializer implements IQueryConditionDLGIni
     public void initQueryConditionDLG(QueryConditionDLGDelegator condDLGDelegator) {
         // TODO Auto-generated method stub
         // 过滤有权限的工厂
+        condDLGDelegator.setPowerEnable(true);
         condDLGDelegator.registerNeedPermissionOrgFieldCode(CMMCommonConstCostPriceBase.PK_ORG);
 
         // // 处理冗余字段，过滤 参数1:组织，参数2 子元数据对应路径
@@ -70,6 +73,15 @@ public class CostPriceQueryConditionInitializer implements IQueryConditionDLGIni
         // MarAssistantDealer marAssisvb = new MarAssistantDealer();
         // marAssisvb.setPrefix("vbfree");
         // condDLGDelegator.addQueryCondVODealer(marAssisvb);
+        // 核算要素
+        // new CoprodcoefFactorByFactorChartFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
+        // CMMCommonConstCostPriceBase.CELEMENTID).addEditorListener();
+        // 核算要素过滤
+        new CMFactorByOrgFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
+                CMMCommonConstCostPriceBase.CELEMENTID).addEditorListener();
+        // 核算要素组
+        new CMFactorGroupByOrgFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
+                CMMCommonConstCostPriceBase.CELEMENTS).addEditorListener();
     }
 
 }

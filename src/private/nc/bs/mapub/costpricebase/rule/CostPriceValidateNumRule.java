@@ -35,11 +35,10 @@ public class CostPriceValidateNumRule implements IRule<CostPriceAggVO> {
         }
         // 验证会计期间与年度是否有一个存在，验证设置了核算要素编码
         this.checkValueRule(vos);
-
     }
 
     /**
-     * 验证会计期间与年度是否有一个存在，验证设置了核算要素编码
+     * 验证会计期间与年度是否有一个存在，验证是否设置了核算要素编码
      *
      * @param vos
      */
@@ -48,14 +47,20 @@ public class CostPriceValidateNumRule implements IRule<CostPriceAggVO> {
         Set<String> errorSet = new HashSet<String>();
         ValidationException ve = new ValidationException();
         for (CostPriceAggVO vo : vos) {
+            // 表头验证
             CostPriceHeadVO head = vo.getParentVO();
-            CostPriceBodyVO[] body = vo.getItemVO();
             String vperiod = head.getVperiod();
             String annual = head.getAnnual();
             String vpricecode = head.getVpricelibcode();
-            // String vpricelibname = head.getVpricelibname();
+            String vpricename = head.getVpricelibname();
             if (CMValueCheck.isEmpty(annual) && CMValueCheck.isEmpty(vperiod)) {
-                String errMsg = "【年度】和【会计期间】必须有一个有值";
+                String errMsg = "【年度】和【会计期间】必须有一个进行设置";
+                if (!errorSet.contains(errMsg)) {
+                    errorSet.add(errMsg);
+                }
+            }
+            if (CMValueCheck.isNotEmpty(annual) && CMValueCheck.isNotEmpty(vperiod)) {
+                String errMsg = "【年度】和【会计期间】互斥，只能对其中一个进行设置";
                 if (!errorSet.contains(errMsg)) {
                     errorSet.add(errMsg);
                 }
@@ -66,12 +71,28 @@ public class CostPriceValidateNumRule implements IRule<CostPriceAggVO> {
                     errorSet.add(errMsg);
                 }
             }
-
+            if (CMValueCheck.isEmpty(vpricename)) {
+                String errMsg = "【价格库名称】必填";
+                if (!errorSet.contains(errMsg)) {
+                    errorSet.add(errMsg);
+                }
+            }
+            // 表体验证
+            CostPriceBodyVO[] body = vo.getItemVO();
+            for (CostPriceBodyVO v : body) {
+                String celementid = v.getCelementid();
+                if (CMValueCheck.isEmpty(celementid)) {
+                    String errMsg = "【核算要素编码】必填";
+                    if (!errorSet.contains(errMsg)) {
+                        errorSet.add(errMsg);
+                    }
+                }
+            }
         }
 
         ValidationFailure failure =
                 new ValidationFailure(nc.vo.jcom.lang.StringUtil.getUnionStr(errorSet.toArray(new String[0]), "\n", ""));
-        if (CMValueCheck.isNotEmpty(failure)) {
+        if (CMValueCheck.isNotEmpty(failure.getMessage())) {
             ve.addValidationFailure(failure);
         }
         if (ve.getFailures() != null && ve.getFailures().size() > 0) {

@@ -8,6 +8,7 @@ import nc.bd.business.rule.DeleteAuditRule;
 import nc.bd.business.rule.FillAddDataRule;
 import nc.bs.mapub.costpricebase.plugin.bpplugin.CostPriceBasePluginPoint;
 import nc.bs.mapub.costpricebase.rule.CostPriceHeadRepeatRule;
+import nc.bs.mapub.costpricebase.rule.CostPriceRepeatRule;
 import nc.bs.mapub.costpricebase.rule.CostPriceValidateNumRule;
 import nc.bs.pubapp.pub.rule.CheckNotNullRule;
 import nc.bs.pubapp.pub.rule.FieldLengthCheckRule;
@@ -64,11 +65,12 @@ public class CostPriceBaseInsertBP {
         IRule<CostPriceAggVO> billAddDataRule = new FillAddDataRule();
         processer.addBeforeFinalRule(billAddDataRule);
 
+        //  ‰»Î÷µºÏ≤È
         IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
         processer.addBeforeRule(checkLegalNullRule);
         //
-        // IRule<CostPriceAggVO> distinctCelementsRule = new CostPriceRepeatRule();
-        // processer.addBeforeRule(distinctCelementsRule);
+        IRule<CostPriceAggVO> distinctCelementsRule = new CostPriceRepeatRule();
+        processer.addBeforeRule(distinctCelementsRule);
     }
 
     /**

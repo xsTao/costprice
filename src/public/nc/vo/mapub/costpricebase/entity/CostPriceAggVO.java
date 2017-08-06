@@ -40,6 +40,6 @@ public class CostPriceAggVO extends AbstractBill {
      * @return 单据表体VO数组
      */
     public CostPriceBodyVO[] getItemVO() {
-        return this.getItemVO();
+        return (CostPriceBodyVO[]) this.getChildren(CostPriceBodyVO.class);
     }
 }

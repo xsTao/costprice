@@ -15,8 +15,10 @@
 	<bean id="deleteProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBaseDeleteProxy" />
 	<!-- 单据查询代理 -->
 	<bean id="queryProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBaseQueryProxy" />
-	
-     <!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
+	<!-- 分页代理 -->
+	<bean id="paginationProxy" class="nc.ui.mapub.costpricebase.serviceproxy.CostPriceBasePaginationProxy" />
+    
+    <!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
 	<bean id="boadatorfactory"
 		class="nc.ui.pubapp.uif2app.view.value.AggVOMetaBDObjectAdapterFactory" />
 
@@ -27,11 +29,18 @@
 	</bean>
 	
 	<!-- 数据模型管理器，主要负责各种方式的模型初始化 -->
-	<bean id="modelDataManager" class="nc.ui.pubapp.uif2app.query2.model.ModelDataManager">
+	<bean id="modelDataManager" class="nc.ui.pubapp.uif2app.model.pagination.PaginationModelDataManager">
 		<property name="model" ref="manageAppModel"></property>
-		<property name="service" ref="queryProxy"></property>
+		<!-- <property name="service" ref="queryProxy"></property> -->
+		<property name="paginationModel" ref="paginationmodel"></property>
+		<property name="pageQueryService" ref="pageQueryService" />
     </bean>
-			
+    
+	<bean id="pageQueryService" class="nc.ui.pubapp.uif2app.model.pagination.UIPageQueryService">
+		<property name="allPagePkQueryServiceMethod" value="nc.itf.mapub.costpricebase.ICostPriceBasePaginationService.queryPKs"></property>
+		<property name="dataOfPksQueryServiceMethod" value="nc.itf.mapub.costpricebase.ICostPriceBasePaginationService.queryBillByPK"></property>
+	</bean>		
+	
     <!-- 模板容器，负责对模板的统一装载 -->
 	<bean id="templateContainer" class="nc.ui.pubapp.uif2app.view.TemplateContainer">
 		<property name="context" ref="context" />
@@ -44,11 +53,14 @@
 	
     <!-- 界面元素 -->
     <!-- 列表视图 -->
-    <bean id="listView" class="nc.ui.mapub.costpricebase.view.CostPriceListView"
+    <!-- <bean id="listView" class="nc.ui.pubapp.uif2app.view.ShowUpableBillListView"
+        init-method="initUI"> -->
+     <bean id="listView" class="nc.ui.mapub.costpricebase.view.CostPriceListView"
         init-method="initUI">
         <property name="model" ref="manageAppModel"/>
         <!-- <property name="billListPanelValueSetter" ref="materialPriceBillListPanelValueSetter" /> -->
 		<property name="templateContainer" ref="templateContainer"/>
+		<property name="paginationBar" ref="paginationBar"></property>
         <!-- 列表自定义项处理 -->
 		<!-- <property name="userdefitemListPreparator">
 			<bean class="nc.ui.pubapp.uif2app.view.CompositeBillListDataPrepare">
@@ -84,33 +96,33 @@
 		</property>
 	</bean> -->
 	<!-- 去除子表自动增行时自动增加的最后一行, 注入exceptFields实现对有默认值的项不做检查 -->
-    <!--<bean id="wholefieldblankchildrenfilter"
+    <bean id="wholefieldblankchildrenfilter"
 		class="nc.ui.pubapp.uif2app.view.value.WholeFieldBlankChildrenFilter">
 	   <property name="exceptFields">
 		    <list>
-			    <value>istatus</value>
+			    <value></value>
 		    </list>
 	   </property>
     </bean>
-    -->
+   
     <bean id="BlankChildrenFilter"
 		class="nc.ui.pubapp.uif2app.view.value.MultiFieldsBlankChildrenFilter">
 		<property name="NullAssertByOr" value="false" />
 		<!-- 指定用来判断空行的字段名称，可能多数情况下是物料字段 -->
-		<!-- <property name="filterMap">
+		<property name="filterMap">
 			<map>
 				<entry>
 					<key>
-						页签code
+						<!-- 页签code -->
 						<value>itempks</value>
 					</key>
 					<list>
-						检验是否空行字段code (材料编码)
-						<value>cmaterialid</value>
+						<!-- 检验是否空行字段(核算要素编码) -->
+						<value>celementid</value>
 					</list>
 				</entry>
 			</map>
-		</property> -->
+		</property>
 	</bean>
   
 	<!-- 快速查询区域 -->
@@ -218,11 +230,12 @@
 				</list>
 			</property>
 		</bean>
+		
 		<bean id="eventMediator" class="nc.ui.pubapp.uif2app.model.AppEventHandlerMediator">
 		<property name="model" ref="manageAppModel" />
 		<property name="handlerGroup">
 			<list>			
-			   <!-- 表头表尾字段编辑前事件 -->
+			    <!-- 表头表尾字段编辑前事件 -->
 				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event" value="nc.ui.pubapp.uif2app.event.card.CardHeadTailBeforeEditEvent" />
 					<property name="handler">
@@ -250,14 +263,14 @@
 				</bean>
 
 				<!-- 表体字段编辑后事件 -->
-				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
 						<bean class="nc.ui.mapub.costpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
 					</property>
-				</bean>
+				</bean> -->
 
 				<!-- 新增事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
@@ -270,7 +283,7 @@
 					</property> 
 				</bean>
 
-				<!-- 主组织改变事件 -->
+				<!-- 组织改变事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.OrgChangedEvent" />
@@ -456,7 +469,7 @@
 				<property name="interceptors">
 					<list>
 						<ref bean="addInterceptor" />
-						<!-- <ref bean="showCardInterceptor" /> -->
+						<ref bean="showCardInterceptor" />
 						<!-- <ref bean="isActivityShowInterceptor" /> -->
 						<ref bean="hideOrgsInterceptor" />
 						
@@ -480,7 +493,7 @@
 			<!-- <bean class="nc.ui.pubapp.uif2app.actions.interceptor.ShowUpComponentInterceptor"> -->
 				<property name="interceptors">
 					<list>
-						<!-- <ref bean="editInterceptor" /> -->
+						<ref bean="editInterceptor" />
 						<ref bean="showCardInterceptor" />
 						<ref bean="hideOrgsInterceptor" />							
 					</list>
@@ -523,6 +536,7 @@
 	        </list>
         </property>
     </bean>	
+    
     <!-- 保存时的表体唯一性校验 （表体核算要素编码） -->
 	<bean id="billBodyUniqueValidator" class="nc.ui.cmpub.framework.validation.CMBillBodyUniqueValidator">
 		<property name="editor" ref="billFormEditor" />
@@ -540,6 +554,7 @@
 			</map>
 		</property>
 	</bean>
+	
 	<!-- 取消按钮 -->
     <bean id="cancelAction" class="nc.ui.pubapp.uif2app.actions.CancelAction">
         <property name="model" ref="manageAppModel" />
@@ -548,12 +563,17 @@
      <!-- 复制 -->
 	<bean id="copyAction" class="nc.ui.pubapp.uif2app.actions.CopyAction">
 		<property name="model" ref="manageAppModel" />
-        <property name="interceptor" ref="showCardInterceptor" />
 		<property name="editor" ref="billFormEditor" />
-		<property name="copyActionProcessor">
-		<bean class="nc.ui.mapub.costpricebase.interceptor.CopyActionProcessor"></bean>
+		<property name="interceptor" ref="showCardInterceptor" />
+		<property name="copyActionProcessor" ref="copyInterceptor">		
 		</property>
 	</bean>
+	<!-- 复制拦截器 -->
+	<bean id="copyInterceptor" class="nc.ui.mapub.costpricebase.interceptor.CopyActionProcessor">
+		<property name="model" ref="manageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+		
  	<!-- 会计期间 -->
 	<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 		<property name="event" value="nc.ui.uif2.AppEvent" />
@@ -578,11 +598,12 @@
 	</bean>
 
 	<!-- 列表下刷新 -->
+	<!-- <bean id="refreshAction" class="nc.ui.mapub.costpricebase.action.CostPriceRefreshAction"> -->
 	<bean id="refreshAction" class="nc.ui.pubapp.uif2app.query2.action.DefaultRefreshAction">
 		<property name="dataManager" ref="modelDataManager" />
 		<property name="model" ref="manageAppModel" />
 	</bean>
-
+	
 	<!-- 卡片下刷新 -->
 	<bean id="cardRefreshAction" class="nc.ui.pubapp.uif2app.actions.RefreshSingleAction">
 		<property name="model" ref="manageAppModel" />
@@ -710,5 +731,18 @@
               <ref bean="outputAction" />
            </list>
        </property>
-    </bean>  
+    </bean>
+    
+    <!-- 分页控件 -->
+	<bean id="paginationBar" class="nc.ui.uif2.components.pagination.PaginationBar" init-method="registeCallbak">
+		<property name="paginationModel" ref="paginationmodel"></property>
+		<property name="context" ref="context" />
+	</bean>
+
+	<!-- 分页模型 -->
+	<bean id="paginationmodel" class="nc.ui.pubapp.uif2app.model.pagination.PubPaginationModel" init-method="init">
+		<property name="paginationQueryService" ref="paginationProxy"></property>
+	</bean>  
+	
+	
 </beans>
