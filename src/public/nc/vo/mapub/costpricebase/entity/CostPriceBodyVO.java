@@ -6,6 +6,7 @@ package nc.vo.mapub.costpricebase.entity;
 
 import nc.vo.pub.IVOMeta;
 import nc.vo.pub.SuperVO;
+import nc.vo.pub.lang.UFDouble;
 import nc.vo.pubapp.pattern.model.meta.entity.vo.VOMetaFactory;
 
 /**
@@ -182,8 +183,8 @@ public class CostPriceBodyVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public String getDprice() {
-        return (String) this.getAttributeValue("dprice");
+    public UFDouble getDprice() {
+        return (UFDouble) this.getAttributeValue("dprice");
     }
 
     /**
@@ -193,7 +194,7 @@ public class CostPriceBodyVO extends SuperVO {
      * @since 2017年7月18日
      * @author
      */
-    public void setDprice(String dprice) {
+    public void setDprice(UFDouble dprice) {
         this.setAttributeValue("dprice", dprice);
     }
 

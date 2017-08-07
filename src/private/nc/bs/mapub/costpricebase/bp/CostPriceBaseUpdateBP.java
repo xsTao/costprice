@@ -7,6 +7,9 @@ import nc.bd.business.rule.AddAuditInfoRule;
 import nc.bd.business.rule.DeleteAuditRule;
 import nc.bd.business.rule.FillAddDataRule;
 import nc.bs.mapub.costpricebase.plugin.bpplugin.CostPriceBasePluginPoint;
+import nc.bs.mapub.costpricebase.rule.CostPriceHeadRepeatRule;
+import nc.bs.mapub.costpricebase.rule.CostPriceRepeatRule;
+import nc.bs.mapub.costpricebase.rule.CostPriceValidateNumRule;
 import nc.bs.pubapp.pub.rule.FieldLengthCheckRule;
 import nc.bs.pubapp.pub.rule.OrgDisabledCheckRule;
 import nc.impl.pubapp.pattern.data.bill.template.UpdateBPTemplate;
@@ -55,14 +58,25 @@ public class CostPriceBaseUpdateBP {
         // 设置表体中集团、组织和会计期间的值
         IRule<CostPriceAggVO> billAddDataRule = new FillAddDataRule();
 
+        // 输入值检查
+        IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
+        processer.addBeforeRule(checkLegalNullRule);
+        //
+        IRule<CostPriceAggVO> distinctCelementsRule = new CostPriceRepeatRule();
+        processer.addBeforeRule(distinctCelementsRule);
+
         processer.addBeforeFinalRule(billAddDataRule);
     }
 
     /**
      * @param aroundProcesser
      */
-    private void addBeforeRule(CompareAroundProcesser<CostPriceAggVO> aroundProcesser) {
+    @SuppressWarnings("unchecked")
+    private void addBeforeRule(CompareAroundProcesser<CostPriceAggVO> processer) {
         // TODO Auto-generated method stub
-
+        IRule<CostPriceAggVO> orgRule = new OrgDisabledCheckRule(CostPriceHeadVO.PK_ORG, IOrgConst.BUSINESSUNITORGTYPE);
+        processer.addAfterRule(orgRule);
+        // 校验表头价格库编码的唯一性
+        processer.addAfterRule(new CostPriceHeadRepeatRule());
     }
 }

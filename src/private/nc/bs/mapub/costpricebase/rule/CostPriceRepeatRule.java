@@ -133,7 +133,7 @@ public class CostPriceRepeatRule implements IRule<CostPriceAggVO> {
         }
 
         if (CMValueCheck.isNotEmpty(itemvo.getDprice())) {
-            uniqueKey.append(itemvo.getDprice());
+            uniqueKey.append(itemvo.getDprice().toString());
         }
 
         return uniqueKey.toString();
