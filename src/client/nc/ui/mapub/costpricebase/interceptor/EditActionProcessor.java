@@ -42,14 +42,14 @@ public class EditActionProcessor implements ActionInterceptor {
      * (non-Javadoc)
      * @see nc.ui.uif2.actions.ActionInterceptor#afterDoActionSuccessed(javax.swing.Action, java.awt.event.ActionEvent)
      */
-    @SuppressWarnings("null")
     @Override
     public void afterDoActionSuccessed(Action action, ActionEvent e) {
         // TODO Auto-generated method stub
         BillCardPanel billCardPanel = ((ShowUpableBillForm) this.getEditor()).getBillCardPanel();
-        BillItem annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
-        BillItem period = billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
+
         if (null != billCardPanel) {
+            BillItem annual = billCardPanel.getHeadItem(CostPriceHeadVO.ANNUAL);
+            BillItem period = billCardPanel.getHeadItem(CostPriceHeadVO.VPERIOD);
             Object annualObj = annual.getValueObject();
             Object periodObj = period.getValueObject();
             billCardPanel.setBillData(billCardPanel.getBillData());

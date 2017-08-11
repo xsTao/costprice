@@ -35,6 +35,11 @@
 		<property name="pageQueryService" ref="pageQueryService" />
     </bean>
     
+    <!-- 数据模型管理器，主要负责各种方式的模型初始化 -->
+	<!-- <bean id="modelDataManager" class="nc.ui.pubapp.uif2app.query2.model.ModelDataManager">
+		<property name="model" ref="manageAppModel"></property>
+		<property name="service" ref="queryProxy"></property>
+	</bean> -->
     <!-- 分页服务接口 -->
 	<bean id="pageQueryService" class="nc.ui.pubapp.uif2app.model.pagination.UIPageQueryService">
 		<property name="allPagePkQueryServiceMethod" value="nc.itf.mapub.costpricebase.ICostPriceBasePaginationService.queryPKs"></property>
@@ -263,14 +268,14 @@
 				</bean>
 
 				<!-- 表体字段编辑后事件 -->
-				<!-- <bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
+				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
 					<property name="event"
 						value="nc.ui.pubapp.uif2app.event.card.CardBodyAfterEditEvent" />
 					<property name="picky" ref="childrenPicky" />
 					<property name="handler">
 						<bean class="nc.ui.mapub.costpricebase.handler.CardBodyAfterEditHandler" init-method="initMap" />
 					</property>
-				</bean> -->
+				</bean>
 
 				<!-- 新增事件 -->
 				<bean class="nc.ui.pubapp.uif2app.event.EventHandlerGroup">
@@ -374,9 +379,9 @@
 	
 	
 	<!--查询界面来源-->
-	<bean id="queryBillForm" class="nc.ui.mapub.costpricebase.util.PriceSourcesQueryService">
+	<!-- <bean id="queryBillForm" class="nc.ui.mapub.costpricebase.util.PriceSourcesQueryService">
 	    <property name="billform" ref="billFormEditor" />
-	</bean>
+	</bean> -->
 	
 	<!-- 分隔按钮 -->
     <bean id="separatorAction" class="nc.funcnode.ui.action.SeparatorAction" /> 
@@ -437,14 +442,16 @@
 				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteLineAction">
 					<property name="clearItems">
 						<list>
-							<value>celementid</value>
+							<value>ccostprice_bid</value>
+							<value>ts</value>
 						</list>
 					</property>
 				</bean>
 				<bean class="nc.ui.pubapp.uif2app.actions.BodyPasteToTailAction">
 					<property name="clearItems">
 						<list>
-							<value>celementid</value>
+							<value>ccostprice_bid</value>
+							<value>ts</value>
 						</list>
 					</property>
 				</bean>
@@ -654,7 +661,7 @@
 		<property name="model" ref="manageAppModel" />
 	</bean>
 		    
- <!-- model与界面的表体排序同步组件 -->
+ 	<!-- model与界面的表体排序同步组件 -->
    	<bean id="billBodySortMediator" class="nc.ui.pubapp.uif2app.model.BillBodySortMediator">
         <constructor-arg ref="manageAppModel" />
         <constructor-arg ref="billFormEditor" />
@@ -679,14 +686,17 @@
     </bean>
     
     <!-- 自动修正卡片界面的分数显示控件(换算率) -->
-    <bean id="fractionFixMediator" class="nc.ui.pubapp.uif2app.view.FractionFixMediator" init-method="initUI">
+    <!-- <bean id="fractionFixMediator" class="nc.ui.pubapp.uif2app.view.FractionFixMediator" init-method="initUI">
         <constructor-arg ref="billFormEditor"/>
-    </bean>
+    </bean> -->
     
     <!-- 双击列表行后显示卡片 -->
     <bean id="mouseClickShowPanelMediator" class="nc.ui.pubapp.uif2app.view.MouseClickShowPanelMediator">
         <property name="listView" ref="listView" />
         <property name="showUpComponent" ref="billFormEditor" />
+        <!-- <property name="interceptor">
+        	<bean  class="nc.ui.mapub.costpricebase.interceptor.DoubleClickInterceptor"></bean>
+        </property> -->
     </bean>
     
     

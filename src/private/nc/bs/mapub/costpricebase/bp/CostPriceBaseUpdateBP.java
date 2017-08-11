@@ -3,13 +3,13 @@
  */
 package nc.bs.mapub.costpricebase.bp;
 
-import nc.bd.business.rule.AddAuditInfoRule;
-import nc.bd.business.rule.DeleteAuditRule;
 import nc.bd.business.rule.FillAddDataRule;
+import nc.bd.business.rule.UpdateAuditInfoRule;
 import nc.bs.mapub.costpricebase.plugin.bpplugin.CostPriceBasePluginPoint;
 import nc.bs.mapub.costpricebase.rule.CostPriceHeadRepeatRule;
 import nc.bs.mapub.costpricebase.rule.CostPriceRepeatRule;
 import nc.bs.mapub.costpricebase.rule.CostPriceValidateNumRule;
+import nc.bs.pubapp.pub.rule.CheckNotNullRule;
 import nc.bs.pubapp.pub.rule.FieldLengthCheckRule;
 import nc.bs.pubapp.pub.rule.OrgDisabledCheckRule;
 import nc.impl.pubapp.pattern.data.bill.template.UpdateBPTemplate;
@@ -38,25 +38,27 @@ public class CostPriceBaseUpdateBP {
     /**
      * @param aroundProcesser
      */
-    @SuppressWarnings("unchecked")
-    private void addAfterRule(CompareAroundProcesser<CostPriceAggVO> processer) {
+    @SuppressWarnings({
+        "unchecked"
+    })
+    private void addBeforeRule(CompareAroundProcesser<CostPriceAggVO> processer) {
         // TODO Auto-generated method stub
         // 检查表体不能为空
-        // IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
-        // processer.addBeforeRule(checkNotNullRule);
-        // 删除审计信息（用于复制按钮，复制时需要清除创建信息和修改信息）
-        IRule deleteAuditRule = new DeleteAuditRule();
-        processer.addBeforeRule(deleteAuditRule);
+        IRule<CostPriceAggVO> checkNotNullRule = new CheckNotNullRule();
+        processer.addBeforeRule(checkNotNullRule);
+
         // 增加审计信息
-        IRule<CostPriceAggVO> addAuditRule = new AddAuditInfoRule();
-        processer.addBeforeRule(addAuditRule);
+        IRule<CostPriceAggVO> updateAuditRule = new UpdateAuditInfoRule();
+        processer.addBeforeRule(updateAuditRule);
         // 校验字段长度是否合法
         IRule<CostPriceAggVO> fieldLengthCheckRule = new FieldLengthCheckRule();
         processer.addBeforeRule(fieldLengthCheckRule);
+
         // 主组织检查
         processer.addBeforeRule(new OrgDisabledCheckRule(CostPriceHeadVO.PK_ORG, IOrgConst.BUSINESSUNITORGTYPE));
         // 设置表体中集团、组织和会计期间的值
         IRule<CostPriceAggVO> billAddDataRule = new FillAddDataRule();
+        processer.addBeforeFinalRule(billAddDataRule);
 
         // 输入值检查
         IRule<CostPriceAggVO> checkLegalNullRule = new CostPriceValidateNumRule();
@@ -65,14 +67,13 @@ public class CostPriceBaseUpdateBP {
         IRule<CostPriceAggVO> distinctCelementsRule = new CostPriceRepeatRule();
         processer.addBeforeRule(distinctCelementsRule);
 
-        processer.addBeforeFinalRule(billAddDataRule);
     }
 
     /**
      * @param aroundProcesser
      */
     @SuppressWarnings("unchecked")
-    private void addBeforeRule(CompareAroundProcesser<CostPriceAggVO> processer) {
+    private void addAfterRule(CompareAroundProcesser<CostPriceAggVO> processer) {
         // TODO Auto-generated method stub
         IRule<CostPriceAggVO> orgRule = new OrgDisabledCheckRule(CostPriceHeadVO.PK_ORG, IOrgConst.BUSINESSUNITORGTYPE);
         processer.addAfterRule(orgRule);

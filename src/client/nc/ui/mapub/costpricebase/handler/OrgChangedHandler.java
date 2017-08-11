@@ -7,8 +7,11 @@ import nc.ui.cmpub.business.util.CMBillPanelUtils;
 import nc.ui.pubapp.uif2app.event.IAppEventHandler;
 import nc.ui.pubapp.uif2app.event.OrgChangedEvent;
 import nc.ui.pubapp.uif2app.view.BillForm;
+import nc.ui.pubapp.uif2app.view.util.BillPanelUtils;
 import nc.ui.uif2.ShowStatusBarMsgUtil;
 import nc.vo.mapub.costpricebase.entity.CostPriceBodyVO;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
+import nc.vo.pubapp.pattern.pub.PubAppTool;
 import nc.vo.uif2.LoginContext;
 
 /**
@@ -31,17 +34,19 @@ public class OrgChangedHandler implements IAppEventHandler<OrgChangedEvent> {
     @Override
     public void handleAppEvent(OrgChangedEvent e) {
         // TODO Auto-generated method stub
-        if (null != this.billForm && this.billForm.isEnabled()) {
+        if (null != this.billForm && this.billForm.isEditable()) {
             // 在编辑状态下，主组织切换时，清空界面数据，自动表体增行，并设置行号
             this.billForm.addNew();
         }
         // 获取上下文
         LoginContext context = this.billForm.getModel().getContext();
-        // if (null != e.getNewPkOrg()) {
-        // context.setPk_org(e.getNewPkOrg()); // 设置新的org
-        // }
-        context.setPk_org(e.getNewPkOrg());
-        // BillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context); // 设置参照过滤
+        if (this.billForm.isEditable() && !PubAppTool.isNull(e.getNewPkOrg())) {
+            context.setPk_org(e.getNewPkOrg()); // 设置新的org
+            this.billForm.getBillCardPanel().setHeadItem(CostPriceHeadVO.PK_ORG, context.getPk_org());
+            this.billForm.getBillCardPanel().getBillData().loadEditHeadRelation(CostPriceHeadVO.PK_ORG);
+        }
+
+        BillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context); // 设置参照过滤
         CMBillPanelUtils.setOrgForAllRef(this.billForm.getBillCardPanel(), context, new String[] {
             CostPriceBodyVO.CELEMENTID
         });

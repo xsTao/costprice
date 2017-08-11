@@ -4,7 +4,6 @@
 package nc.ui.mapub.costpricebase.query;
 
 import nc.ui.cmpub.business.filter.CMFactorByOrgFilter;
-import nc.ui.cmpub.business.filter.CMFactorGroupByOrgFilter;
 import nc.ui.pubapp.uif2app.query2.IQueryConditionDLGInitializer;
 import nc.ui.pubapp.uif2app.query2.QueryConditionDLGDelegator;
 import nc.ui.uif2.model.AbstractUIAppModel;
@@ -80,8 +79,17 @@ public class CostPriceQueryConditionInitializer implements IQueryConditionDLGIni
         new CMFactorByOrgFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
                 CMMCommonConstCostPriceBase.CELEMENTID).addEditorListener();
         // 核算要素组
-        new CMFactorGroupByOrgFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
-                CMMCommonConstCostPriceBase.CELEMENTS).addEditorListener();
+        // new CMFactorGroupByOrgFilter(condDLGDelegator, CMMCommonConstCostPriceBase.PK_ORG,
+        // CMMCommonConstCostPriceBase.CELEMENTS).addEditorListener();
+        // 年度有值则会计期间不可选
+        new CostPriceAnnualPeriodFilter(condDLGDelegator, CMMCommonConstCostPriceBase.ANNUAL,
+                CMMCommonConstCostPriceBase.VPERIOD).addEditorListener();
+        // 会计期间有值则年度不可选
+        new CostPriceAnnualPeriodFilter(condDLGDelegator, CMMCommonConstCostPriceBase.VPERIOD,
+                CMMCommonConstCostPriceBase.ANNUAL).addEditorListener();
+
+        // new
+        // CostPriceBaseScaleUtil().setQueryScale(this.getModel().getContext().getPk_group(),this.getBillCardPanel())
     }
 
 }

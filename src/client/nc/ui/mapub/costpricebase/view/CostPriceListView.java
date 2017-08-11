@@ -24,9 +24,9 @@ public class CostPriceListView extends ShowUpableBillListView {
         super.initUI();
         new CostPriceBaseScaleUtil().setListScale(this.getModel().getContext().getPk_group(), this.getBillListPanel());
         this.getBillListPanel().getHeadBillModel().setSortColumn(new String[] {
-                CostPriceHeadVO.PK_ORG, CostPriceHeadVO.CCOSTPRICEID
+            CostPriceHeadVO.PK_ORG, CostPriceHeadVO.CREATETIME
         });
-        this.billListPanel.addMouseListener(this);
+        // this.billListPanel.addMouseListener(this);
         if (null != this.paginationBar) {
             this.billListPanel.addHeadNavigatePanel(this.paginationBar);
         }

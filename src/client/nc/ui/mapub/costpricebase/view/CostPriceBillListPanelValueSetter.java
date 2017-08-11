@@ -60,7 +60,7 @@ public class CostPriceBillListPanelValueSetter implements IBillListPanelValueSet
         // }
         // ≈≈–Ú
         listPanel.getHeadBillModel().setSortColumn(new String[] {
-            CostPriceHeadVO.PK_ORG_V, CostPriceHeadVO.CREATETIME
+                CostPriceHeadVO.PK_ORG, CostPriceHeadVO.CREATETIME
         });
         listPanel.getBillListData().setHeaderValueObjectByMetaData(allDatas);
         listPanel.getBillListData().getHeadBillModel().execLoadFormula();

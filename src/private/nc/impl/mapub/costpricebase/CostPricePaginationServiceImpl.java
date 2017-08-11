@@ -3,6 +3,9 @@
  */
 package nc.impl.mapub.costpricebase;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import nc.impl.pubapp.pattern.data.bill.BillQuery;
 import nc.impl.pubapp.pattern.database.DataAccessUtils;
 import nc.itf.mapub.costpricebase.ICostPriceBasePaginationService;
@@ -28,20 +31,7 @@ public class CostPricePaginationServiceImpl implements ICostPriceBasePaginationS
      */
     @Override
     public String[] queryPKs(IQueryScheme queryScheme) throws BusinessException {
-        // try {
-        // QueryTempletParam param = new QueryTempletParam();
-        // // param.setPk_org(CMMCommonConstCostPriceBase.PK_ORG);
-        // // param.setCperiod(CMMCommonConstCostPriceBase.VPERIOD);
-        // // param.setCproductid(CMMCommonConstCostPriceBase.VPRODUCTCODE);
-        // param.setPk_group(CMMCommonConstCostPriceBase.PK_ORG);
-        // CMBillQuery<CostPriceAggVO> qry = new CMBillQuery<CostPriceAggVO>(CostPriceAggVO.class, param);
-        // Object[] rets = qry.queryByQueryScheme(queryScheme);
-        // return (String[]) rets;
-        // }
-        // catch (Exception e) {
-        // ExceptionUtils.marsh(e);
-        // }
-        // return null;
+
         StringBuffer sql = new StringBuffer();
         QuerySchemeProcessor processor = new QuerySchemeProcessor(queryScheme);
         // 默认组织权限
@@ -59,6 +49,12 @@ public class CostPricePaginationServiceImpl implements ICostPriceBasePaginationS
         DataAccessUtils dao = new DataAccessUtils();
         IRowSet rowSet = dao.query(sql.toString());
         String[] keys = rowSet.toOneDimensionStringArray(); // 转化为一维字符串数组
+
+        Set<String> keySet = new LinkedHashSet<String>(keys.length);
+        for (String string : keys) {
+            keySet.add(string);
+        }
+        keys = keySet.toArray(new String[0]);
 
         return keys;
     }

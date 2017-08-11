@@ -8,7 +8,8 @@ import nc.ui.pub.bill.BillListPanel;
 import nc.ui.pubapp.scale.CardPaneScaleProcessor;
 import nc.ui.pubapp.scale.ListPaneScaleProcessor;
 import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
-import nc.vo.mapub.costpricebase.entity.CostPriceBodyVO;
+import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
+import nc.vo.mapub.costpricebase.info.CostPriceBodyVOInfo;
 import nc.vo.pubapp.scale.BillScaleProcessor;
 import nc.vo.pubapp.scale.BillVOScaleProcessor;
 import nc.vo.pubapp.scale.PosEnum;
@@ -31,35 +32,23 @@ public class CostPriceBaseScaleUtil {
     }
 
     // 设置打印精度
-    // public void setPrintScale(String pk_group, CostPriceAggVO[] bills) {
-    // this.setScale(new BillVOScaleProcessor(pk_group, bills));
-    // }
+    public void setPrintScale(String pk_group, CostPriceAggVO[] bills) {
+        this.setScale(new BillVOScaleProcessor(pk_group, bills));
+    }
 
     private void setScale(BillScaleProcessor scale) {
-
+        CostPriceBodyVOInfo voInfo = new CostPriceBodyVOInfo();
+        // 金额进度
+        if (voInfo.getMoneyList().size() > 0) {
+            scale.setStockOrgCostMnyCtlInfo(voInfo.getMoneyList().toArray(new String[0]), PosEnum.body, null,
+                    CostPriceHeadVO.PK_ORG, PosEnum.head, null);
+        }
+        scale.process();
         // 单价精度
-        scale.setCostPriceCtlInfo(new String[] {
-            CostPriceBodyVO.DPRICE
-        }, PosEnum.body, null);
+        // scale.setCostPriceCtlInfo(new String[] {
+        // CostPriceBodyVO.DPRICE
+        // }, PosEnum.body, null);
 
-        //
-        // scale.setCostPriceCtlInfo(new String[] {
-        // CostPriceHeadVO.ANNUAL
-        // }, PosEnum.head, null);
-        // scale.setCostPriceCtlInfo(new String[] {
-        // CostPriceHeadVO.VPERIOD
-        // }, PosEnum.head, null);
-        // scale.process();
     }
 
-    /**
-     * 打印精度
-     * 
-     * @param pk_group
-     * @param vos
-     */
-    public void setPrintScale(String pk_group, CostPriceAggVO[] vos) {
-        // TODO Auto-generated method stub
-        this.setScale(new BillVOScaleProcessor(pk_group, vos));
-    }
 }

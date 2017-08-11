@@ -3,6 +3,7 @@
  */
 package nc.ui.mapub.costpricebase.view;
 
+import nc.ui.mapub.costpricebase.scale.CostPriceBaseScaleUtil;
 import nc.ui.pubapp.uif2app.view.ShowUpableBillForm;
 
 /**
@@ -16,23 +17,11 @@ public class CostPriceBillForm extends ShowUpableBillForm {
 
     private static final long serialVersionUID = 1911037728443216074L;
 
-    //
-    // @Override
-    // protected void onEdit() {
-    // super.onEdit();
-    // }
-    //
-    // @Override
-    // protected void onNotEdit() {
-    // super.onNotEdit();
-    // }
-
     @Override
     public void initUI() {
         super.initUI();
-        CostPriceBillTableBatchCopy billTableBatchCopy = new CostPriceBillTableBatchCopy();
-        billTableBatchCopy.setBillCardPanel(this.getBillCardPanel());
-        // this.getBillCardPanel().getBodyPanel().addBatchCopyListener(billTableBatchCopy);
+
+        new CostPriceBaseScaleUtil().setCardScale(this.getModel().getContext().getPk_group(), this.getBillCardPanel());
     }
 
 }

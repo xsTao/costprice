@@ -10,7 +10,6 @@ import nc.bd.framework.base.CMValueCheck;
 import nc.cmpub.business.adapter.BDAdapter;
 import nc.ui.pub.bill.BillCardPanel;
 import nc.ui.pub.bill.BillItem;
-import nc.ui.pubapp.AppUiContext;
 import nc.ui.pubapp.uif2app.actions.intf.ICopyActionProcessor;
 import nc.ui.pubapp.uif2app.model.BillManageModel;
 import nc.ui.pubapp.uif2app.view.BillForm;
@@ -19,7 +18,6 @@ import nc.vo.mapub.costpricebase.entity.CostPriceAggVO;
 import nc.vo.mapub.costpricebase.entity.CostPriceHeadVO;
 import nc.vo.pub.ISuperVO;
 import nc.vo.pub.IVOMeta;
-import nc.vo.pub.lang.UFDate;
 import nc.vo.uif2.LoginContext;
 
 /**
@@ -99,12 +97,10 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         // TODO Auto-generated method stub
 
         CostPriceHeadVO hvo = billVO.getParentVO();
-        // 获取当前登陆时间
-        UFDate serverDate = AppUiContext.getInstance().getBusiDate();
 
+        // 设置空处理
         hvo.setVpricelibcode(null);
         hvo.setVpricelibname(null);
-        // 设置空处理
         hvo.setModifier(null);
         hvo.setModifiedtime(null);
         hvo.setCreator(null);
@@ -115,7 +111,7 @@ public class CopyActionProcessor implements ICopyActionProcessor<CostPriceAggVO>
         hvo.setPkOrg(context.getPk_org());
         // 组织最新版本
         Map<String, String> orgVid = BDAdapter.getNewVIDSByOrgIDS(new String[] {
-                context.getPk_org()
+            context.getPk_org()
         });
         if (CMMapUtil.isNotEmpty(orgVid)) {
             hvo.setPkOrgV(orgVid.get(context.getPk_org()));

@@ -300,7 +300,7 @@
 				</bean>
 			</list>
 		</property>
-		<!-- <property name="dataManager" ref="modelDataManager"></property> -->
+
 	</bean>
 	
 	<!-- 显示卡片的拦截器 -->
@@ -460,7 +460,12 @@
 		<property name="model" ref="model"></property>
 		<property name="service" ref="queryProxy"></property>
 	</bean>
-	
+	<!-- 双击列表行后显示卡片 -->
+    <bean id="mouseClickShowPanelMediator" class="nc.ui.pubapp.uif2app.view.MouseClickShowPanelMediator">
+        <property name="listView" ref="listView" />
+        <property name="showUpComponent" ref="billForm" />
+    </bean>
+    
 	<!-- 模板容器，负责对模板的统一装载 -->
 	<bean id="templateContainer" class="nc.ui.pubapp.uif2app.view.TemplateContainer">
 		<property name="context" ref="context" />
